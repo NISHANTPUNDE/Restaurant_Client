@@ -137,65 +137,41 @@ const Admin = () => {
           </div>
         </div>
         <div className="mb-6">
-          <h2 className="text-2xl font-semibold mb-4">Select menu Templete</h2>
-          <div className="grid grid-cols-3 gap-4">
+          <h2 className="text-2xl font-semibold mb-4">Select Menu Template</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {menuImages.map((image, index) => (
-              <div key={index} className="flex flex-col items-center gap-4">
-                <img src={image} alt="menu" className="w-32 h-32" />
-                <input
-                  type="radio"
-                  name="menuImage"
-                  value={image}
-                  onChange={(e) => setDishmenuTemplete(e.target.value)}
-                  required
-                />
+              <div
+                key={index}
+                onClick={() => setDishmenuTemplete(image)}
+                className={`flex flex-col items-center gap-4 cursor-pointer p-2 ${
+                  dishmenuTemplete === image
+                    ? "border-4 border-blue-500"
+                    : "border"
+                }`}
+              >
+                <img src={image} alt="menu" className="w-48 h-48" />
               </div>
             ))}
           </div>
         </div>
         <div className="mb-6">
           <h2 className="text-2xl font-semibold mb-4">Select Menu Color</h2>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="flex flex-col items-center gap-4">
-              <div className="w-8 h-8 bg-red-500 rounded-full"></div>
-              <input
-                type="radio"
-                name="menuColor"
-                value="red"
-                onChange={(e) => setDishmenuColor(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col items-center gap-4">
-              <div className="w-8 h-8 bg-blue-500 rounded-full"></div>
-              <input
-                type="radio"
-                name="menuColor"
-                value="blue"
-                onChange={(e) => setDishmenuColor(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col items-center gap-4">
-              <div className="w-8 h-8 bg-green-500 rounded-full"></div>
-              <input
-                type="radio"
-                name="menuColor"
-                value="green"
-                onChange={(e) => setDishmenuColor(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col items-center gap-4">
-              <div className="w-8 h-8 bg-yellow-500 rounded-full"></div>
-              <input
-                type="radio"
-                name="menuColor"
-                value="Yellow"
-                onChange={(e) => setDishmenuColor(e.target.value)}
-              />
-            </div>
+          <div
+            style={{ borderColor: `${dishmenuColor}` }}
+            class="flex items-center text-2xl w-48 border-4  rounded-lg p-2"
+          >
+            <input
+              type="color"
+              id="color-picker"
+              class="w-10 h-10 outline-none bg-transparent border-none"
+              onChange={(e) => setDishmenuColor(e.target.value)}
+            />
+            <span id="value" className="ml-1">
+              {dishmenuColor}
+            </span>
           </div>
         </div>
 
-        {/* Dish Types and Dishes */}
         {dishesByType.map((dishTypeObj, dishTypeIndex) => (
           <div key={dishTypeIndex} className="mb-6">
             <h2 className="text-2xl font-semibold mb-4">
@@ -278,7 +254,6 @@ const Admin = () => {
           </div>
         ))}
 
-        {/* Add New Dish Type */}
         <div className="mb-6">
           <h2 className="text-2xl font-semibold mb-4">Add New Dish Type</h2>
           <input
@@ -298,7 +273,58 @@ const Admin = () => {
           </button>
         </div>
 
-        {/* Submit Button */}
+        <div className="mb-6">
+          <h2 className="text-2xl font-semibold mb-4">Preview</h2>
+          <div className="max-w-4xl mx-auto bg-white shadow-lg">
+            <div className="grid grid-cols-4">
+              <div
+                style={{
+                  backgroundColor: dishmenuColor ? dishmenuColor : "yellow",
+                }}
+                className="md:p-8 relative"
+              >
+                <div className="absolute top-1/3 md:top-2/3 transform -rotate-90 text-white text-5xl md:text-7xl font-bold">
+                  MENU
+                </div>
+                <div className="flex flex-col items-center justify-center mt-16 md:mt-32"></div>
+              </div>
+
+              <div className="p-8">
+                <h1 className="text-5xl font-bold">
+                  {hotelName ? hotelName : "Your hotel name"}
+                </h1>
+                <h2 className="text-2xl font-semibold text-gray-500 mb-2">
+                  HOTEL
+                </h2>
+                <div className="flex items-center mb-6">
+                  <span className="text-xl">📞</span>
+                  <h3 className="text-xl font-semibold">{phone}</h3>
+                </div>
+
+                <div className="mt-6">
+                  {dishesByType?.map((item, index) => (
+                    <div key={index} className="mt-6">
+                      <h3 className="text-xl font-bold bg-yellow-400 px-2 py-1 inline-block mb-2">
+                        {item.dishType}
+                      </h3>
+                      <ul className="flex flex-col">
+                        {item.dishes.map((dish, dishIndex) => (
+                          <li key={dishIndex} className="flex justify-between">
+                            <span>{dish.dishName}</span>
+                            <span>
+                              <strong>Rs:</strong> {dish.price}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="text-center">
           <button
             className="bg-blue-500 text-white px-6 py-2 rounded"

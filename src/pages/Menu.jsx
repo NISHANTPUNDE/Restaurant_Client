@@ -67,62 +67,6 @@ const Menu = () => {
               </div>
             ))}
           </div>
-
-          {/* <div class="mt-6">
-            <h3 class="text-xl font-bold bg-yellow-400 px-2 py-1 inline-block mb-2">
-              NOODLES
-            </h3>
-            <ul>
-              <li class="flex justify-between">
-                <span>Egg Noodles</span> <span>$5.00</span>
-              </li>
-              <li class="flex justify-between">
-                <span>Rice Noodles </span> <span>$7.00</span>
-              </li>
-              <li class="flex justify-between">
-                <span>Soy Ginger</span> <span>$6.50</span>
-              </li>
-              <li class="flex justify-between">
-                <span>Ramen Noodles</span> <span>$4.00</span>
-              </li>
-              <li class="flex justify-between">
-                <span>Soba Noodles</span> <span>$5.50</span>
-              </li>
-              <li class="flex justify-between">
-                <span>Chicken Noodles</span> <span>$6.50</span>
-              </li>
-              <li class="flex justify-between">
-                <span>Beef Noodles</span> <span>$6.00</span>
-              </li>
-            </ul>
-
-            <h3 class="text-xl font-bold bg-yellow-400 px-2 py-1 inline-block mt-6 mb-2">
-              SUSHI
-            </h3>
-            <ul>
-              <li class="flex justify-between">
-                <span>Nigiri Sushi</span> <span>$5.00</span>
-              </li>
-              <li class="flex justify-between">
-                <span>Sashimi Sushi</span> <span>$7.00</span>
-              </li>
-              <li class="flex justify-between">
-                <span>Maki Sushi</span> <span>$6.50</span>
-              </li>
-              <li class="flex justify-between">
-                <span>Uramaki Sushi</span> <span>$4.00</span>
-              </li>
-              <li class="flex justify-between">
-                <span>Temaki Sushi</span> <span>$5.50</span>
-              </li>
-              <li class="flex justify-between">
-                <span>Hamachi Sushi</span> <span>$6.50</span>
-              </li>
-              <li class="flex justify-between">
-                <span>Tiger Roll Sushi</span> <span>$6.00</span>
-              </li>
-            </ul>
-          </div> */}
         </div>
       </div>
     </div>
