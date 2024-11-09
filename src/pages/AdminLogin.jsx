@@ -1,28 +1,45 @@
-import React, { useEffect } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useFetch from "../hooks/useRestaurantAdminFetch";
+import { API_BASE_URL } from "../config/config";
+import { useCookies } from "react-cookie";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const { data, error, loading, fetchData } = useFetch(
+    `${API_BASE_URL}/api/login/restaurant`,
+    "POST",
+    true
+  );
+  console.log(data, error, loading);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    console.log(data);
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/login/restaurant",
-        data
-      );
+    const requestData = Object.fromEntries(formData);
 
-      if (response.status === 200) {
-        const restaurant = response.data.restaurant;
-        navigate(`/admin/${restaurant}`);
-      }
-    } catch (error) {
-      alert("Invalid credentials");
-    }
+    await fetchData(requestData);
   };
+
+  useEffect(() => {
+    cookies.restaurant_token && navigate(`/admin/${data.restaurant}`);
+  }, [cookies.token, navigate]);
+
+  useEffect(() => {
+    if (data) {
+      navigate(`/admin/${data.restaurant}`);
+      setCookie("restaurant_token", data.token);
+    }
+  }, [data, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      setErrorMessage(error);
+      removeCookie("restaurant_token");
+    }
+  }, [error]);
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -72,6 +89,9 @@ const AdminLogin = () => {
                 Sign in
               </button>
             </form>
+            {errorMessage && (
+              <p className="mt-2 text-center text-red-500">{errorMessage}</p>
+            )}
           </div>
         </div>
       </div>

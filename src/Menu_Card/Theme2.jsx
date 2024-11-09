@@ -13,7 +13,7 @@ export default function Theme2() {
     const fetchRestaurant = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/getmenuitem/jamuna`
+          `http://localhost:3000/api/getmenuitem/${restaurant}`
         );
         const data = res.data.data[0];
         const fetchedMenuItems = {};

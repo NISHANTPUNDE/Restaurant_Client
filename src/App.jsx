@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { IoMoon, IoSunny } from "react-icons/io5";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Menu from "./pages/Menu";
 import Admin from "./pages/Admin";
@@ -10,13 +8,6 @@ import Theme3 from "./Menu_Card/Theme3";
 import SuperAdmin from "./pages/SuperAdmin";
 import Auth from "./pages/Auth";
 function App() {
-  // const [dark, setDark] = useState(false);
-
-  // const darkModeHandler = () => {
-  //   setDark(!dark);
-  //   document.body.classList.toggle("dark");
-  // };
-
   return (
     <Router>
       <Routes>
@@ -25,9 +16,9 @@ function App() {
         <Route path="/:restaurant" element={<Menu />} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/:restaurant" element={<Admin />} />
-        <Route path="/menucard" element={<BlackTheme />} />
-        <Route path="/menucard1" element={<Theme2 />} />
-        <Route path="/menucard2" element={<Theme3 />} />
+        <Route path="/menucard/:restaurant" element={<BlackTheme />} />
+        <Route path="/menucard1/:restaurant" element={<Theme2 />} />
+        <Route path="/menucard2/:restaurant" element={<Theme3 />} />
       </Routes>
     </Router>
   );

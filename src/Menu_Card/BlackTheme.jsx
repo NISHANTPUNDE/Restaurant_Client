@@ -1,158 +1,71 @@
-import React from "react";
-import {
-  FaInstagram,
-  FaFacebookF,
-  FaTwitter,
-  FaWhatsapp,
-} from "react-icons/fa";
-import img from "../assets/bg.svg";
+import React, { useEffect, useState } from "react";
+import soup from "../assets/soup.jpg";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const BlackTheme = () => {
+  const { restaurant } = useParams();
+  const [menu, setMenu] = useState([]);
+  console.log(restaurant);
+  useEffect(() => {
+    const fetchRestaurant = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:3000/api/getmenuitem/${restaurant}`
+        );
+        setMenu(res?.data?.data[0]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchRestaurant();
+  }, []);
+
   return (
-    <div className="card-menu w-[100%] h-[700px] bg-primary shadow-lg flex flex-col justify-between overflow-hidden rounded-lg p-4">
-      {/* Header Section */}
-      <div className="header relative w-full h-[150px] flex justify-center mt-3">
-        <img
-          src={img}
-          alt="bg"
-          className="w-full absolute left-0 transform scale-y-[-1] -top-[100px] md:h-[200px] lg:h-[250px]"
-        />
-        <h1 className="main-title relative text-light uppercase text-2xl font-bold">
-          yashoda hotel Menu
-        </h1>
-      </div>
+    <div class="max-w-4xl mx-auto  bg-white shadow-lg">
+      <div class="grid grid-cols-4">
+        <div
+          style={{ backgroundColor: menu?.dishmenuColor }}
+          className="md:p-8 relative"
+        >
+          <div class="absolute top-1/3 md:top-2/3 transform -rotate-90 text-white text-5xl  md:text-7xl font-bold">
+            MENU
+          </div>
 
-      {/* Main Section */}
-      <div className="main px-6 md:px-12 mx-auto h-[350px] flex flex-wrap gap-y-1 md:pl-32 ">
-        {/* Row 1: Food and Drink */}
-        <div className="flex items-center w-full justify-between ">
-          {/* Food Section */}
-          <ul className=" w-1/2 mr-4 ">
-            <h2 className="title text-xl uppercase mb-2">Food</h2>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Burger Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Burger Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Burger Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Burger Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Burger Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-          </ul>
-
-          {/* Drink Section */}
-          <ul className="drink w-1/2 ">
-            <h2 className="title text-xl uppercase mb-2">Drink</h2>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Drink Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Drink Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Drink Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Drink Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Drink Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-          </ul>
+          <div class="flex flex-col items-center justify-center mt-16  md:mt-32">
+            <img
+              src={soup}
+              alt="Noodles"
+              class="w-20 h-20 md:w-40 md:h-40  rounded-full"
+            />
+          </div>
         </div>
 
-        {/* Row 2: Dessert and Additional */}
-        <div className="flex w-full justify-between md:justify-normal md:gap-3 ">
-          {/* Dessert Section */}
-          <ul className="dessert w-1/2 mr-4 ">
-            <h2 className="title text-xl uppercase mb-2">Dessert</h2>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Dessert Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Dessert Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Dessert Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Dessert Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Dessert Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            {/* Repeat similar items */}
-          </ul>
+        <div class="p-8">
+          <h1 class="text-5xl font-bold">{restaurant}</h1>
+          <h2 class="text-2xl font-semibold text-gray-500 mb-2">HOTEL</h2>
+          <div class="flex items-center mb-6">
+            <span class="text-xl">📞</span>
+            <h3 class="text-xl font-semibold">{menu?.phone}</h3>
+          </div>
 
-          {/* Additional Section */}
-          <ul className="additional w-1/2 ">
-            <h2 className="title text-xl uppercase mb-2">Additional</h2>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Additional Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Additional Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Additional Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Additional Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-            <li className="flex items-center justify-between md:justify-normal md:gap-3 ">
-              <h3 className="list-title capitalize text-sm">Additional Name</h3>
-              <span className="font-medium">$10</span>
-            </li>
-          </ul>
+          <div className="mt-6">
+            {menu?.dishesByType?.map((item, index) => (
+              <div key={index} className="mt-6">
+                <h3 className="text-xl font-bold bg-yellow-400 px-2 py-1 inline-block mb-2">
+                  {item?.dishType}
+                </h3>
+                <ul className="flex flex-col">
+                  {item?.dishes?.map((dish, dishIndex) => (
+                    <li key={dishIndex} className="flex justify-between">
+                      <span>{dish?.dishName}</span> <span>${dish?.price}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-
-      {/* Footer Section */}
-      <div className="footer relative w-full h-[150px] flex justify-center items-center">
-        <img
-          src={img}
-          alt="bg"
-          className="w-full absolute left-0 transform scale-x-[-1] top-0 md:h-[200px] lg:h-[250px]"
-        />
-        <ul className="social-media flex items-center relative list-none mt-5">
-          <li className="w-8 h-8 text-dark bg-light flex items-center justify-center rounded-full ml-2 border border-dark cursor-pointer transition hover:bg-dark hover:text-primary hover:border-light">
-            <FaInstagram />
-          </li>
-          <li className="w-8 h-8 text-dark bg-light flex items-center justify-center rounded-full ml-2 border border-dark cursor-pointer transition hover:bg-dark hover:text-primary hover:border-light">
-            <FaFacebookF />
-          </li>
-          <li className="w-8 h-8 text-dark bg-light flex items-center justify-center rounded-full ml-2 border border-dark cursor-pointer transition hover:bg-dark hover:text-primary hover:border-light">
-            <FaTwitter />
-          </li>
-          <li className="w-8 h-8 text-dark bg-light flex items-center justify-center rounded-full ml-2 border border-dark cursor-pointer transition hover:bg-dark hover:text-primary hover:border-light">
-            <FaWhatsapp />
-          </li>
-        </ul>
       </div>
     </div>
   );
