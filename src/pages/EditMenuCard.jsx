@@ -14,7 +14,7 @@ const Admin = () => {
     address: "",
     phone: "",
     dishmenuTemplete: "",
-    dishmenuColor: "",
+    dishmenuColor: "ffca2a",
   });
   const [dishesByType, setDishesByType] = useState([]);
   const [dishType, setDishType] = useState("");
@@ -99,7 +99,8 @@ const Admin = () => {
           restaurant,
         }
       );
-      alert(response.data.message);
+      toast.success(response.data.message)
+      // alert(response.data.message);
       setDataRestro({
         hotelName: "",
         address: "",
@@ -109,7 +110,8 @@ const Admin = () => {
       });
     } catch (error) {
       console.error(error);
-      alert("An error occurred. Please check the console for more details.");
+      toast.error("Something Went Wrong. ")
+      // alert("An error occurred. Please check the console for more details.");
     }
   };
 
@@ -118,11 +120,13 @@ const Admin = () => {
       const response = await axios.delete(
         `http://localhost:3000/api/restaurant/delete/?restaurant=${restaurant}`
       );
-      alert(response.data.message);
+      toast.success(response.data.message)
+      // alert(response.data.message);
       Navigate(`/admin/${restaurant}`);
     } catch (error) {
       console.error(error);
-      alert("An error occurred. Please check the console for more details.");
+      toast.error("Something Went Wrong. ")
+      // alert("An error occurred. Please check the console for more details.");
     }
   };
 
@@ -430,7 +434,7 @@ const Admin = () => {
                         placeholder="Enter Dish Name"
                         required
                       /> */}
-                      <div className="relative z-0">
+                      <div className="relative z-0 my-3">
                         <input
                           type="text"
                           value={dish.dishName}
@@ -474,7 +478,7 @@ const Admin = () => {
                         placeholder="Enter Price"
                         required
                       /> */}
-                      <div className="relative z-0">
+                      <div className="relative z-0 my-3">
                         <input
                           type="number"
                           value={dish.price}
@@ -501,7 +505,7 @@ const Admin = () => {
                     </div>
                     <div>
                       <button
-                        className="bg-orange-500 text-white px-6 py-2 w-full rounded mt-2"
+                        className="bg-orange-500 text-white px-6 py-2 w-full rounded my-2"
                         type="button"
                         onClick={() =>
                           handleRemoveDish(dishTypeIndex, dishIndex)

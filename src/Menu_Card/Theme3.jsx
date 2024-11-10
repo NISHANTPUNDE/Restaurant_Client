@@ -52,11 +52,29 @@ const Theme3 = () => {
           </div>
         </div>
 
-        <div className="flex justify-center mb-8">
+        {/* <div className="flex justify-center mb-8">
           {Object.keys(menuItems).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
+              className={`px-6 py-2 mx-2 text-lg font-semibold rounded ${
+                activeTab === tab
+                  ? "bg-red-600 text-white"
+                  : "text-black border border-red-600 hover:bg-red-600 hover:text-white"
+              }`}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
+        </div> */}
+        <div className="flex justify-center mb-8">
+          {Object.keys(menuItems).map((tab) => (
+            <button
+              key={tab}
+              onClick={(e) => {
+                e.preventDefault(); // Prevents page refresh
+                setActiveTab(tab);
+              }}
               className={`px-6 py-2 mx-2 text-lg font-semibold rounded ${
                 activeTab === tab
                   ? "bg-red-600 text-white"

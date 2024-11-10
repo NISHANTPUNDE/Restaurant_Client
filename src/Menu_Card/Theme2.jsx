@@ -36,8 +36,10 @@ export default function Theme2() {
     fetchRestaurant();
   }, [restaurant]);
 
-  const handleMenuClick = (menu) => {
+  const handleMenuClick = (e, menu) => {
+    e.preventDefault(); // Prevents the default page refresh
     setActiveMenu(menu);
+    console.log("Menu selected:", menu);
   };
 
   console.log(menuItems);
@@ -59,7 +61,7 @@ export default function Theme2() {
               key={menu}
               ref={(el) => (buttonsRef.current[index] = el)}
               data-target={menu}
-              onClick={() => handleMenuClick(menu)}
+              onClick={(e) => handleMenuClick(e, menu)} // Corrected event handling
               className={`text-white font-semibold py-2 px-4 m-2 uppercase ${
                 activeMenu === menu ? "bg-yellow-400" : "bg-transparent"
               } border border-yellow-400 rounded transition-colors`}
