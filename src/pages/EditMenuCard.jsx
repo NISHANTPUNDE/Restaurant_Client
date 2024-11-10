@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import BlackTheme from "../Menu_Card/BlackTheme";
 import Theme2 from "../Menu_Card/Theme2";
 import Theme3 from "../Menu_Card/Theme3";
 
 const Admin = () => {
+  const Navigate = useNavigate();
   const [dataRestro, setDataRestro] = useState({
     hotelName: "",
     address: "",
@@ -18,6 +19,8 @@ const Admin = () => {
   const [dishType, setDishType] = useState("");
   const [menuImages, setMenuImages] = useState([]);
   const { restaurant } = useParams();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchMenuImages = async () => {
@@ -30,6 +33,23 @@ const Admin = () => {
     };
     fetchMenuImages();
   }, []);
+
+  useEffect(() => {
+    const fetchRestaurant = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:3000/api/getmenuitem/${restaurant}`
+        );
+        setDataRestro(res.data.data[0]);
+        setDishesByType(res.data.data[0].dishesByType);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchRestaurant();
+  }, [restaurant]);
+  console.log(dataRestro);
+  console.log(dishesByType);
 
   const handleAddDish = (index) => {
     const newDishesByType = [...dishesByType];
@@ -71,8 +91,8 @@ const Admin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/restaurant/add",
+      const response = await axios.put(
+        "http://localhost:3000/api/restaurant/edit",
         {
           dataRestro,
           dishesByType,
@@ -93,16 +113,22 @@ const Admin = () => {
     }
   };
 
-  // State to handle the toggle for navbar
-  const [isOpen, setIsOpen] = useState(false);
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/restaurant/delete/?restaurant=${restaurant}`
+      );
+      alert(response.data.message);
+      Navigate(`/admin/${restaurant}`);
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred. Please check the console for more details.");
+    }
+  };
 
-  // Function to toggle the dropdown menu
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
-  // modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -112,13 +138,11 @@ const Admin = () => {
     .replace("http://localhost:3000/public/", "")
     .replace(/\.[^/.]+$/, "");
   const ThemeComponent = trimmedFilename;
-
-  console.log(trimmedFilename);
+  console.log(ThemeComponent);
 
   return (
     <>
       <Toaster />
-      {/* navbar */}
       <nav className="bg-white  border-gray-200 dark:bg-gray-900">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a
@@ -174,9 +198,12 @@ const Admin = () => {
                 </button>
               </li>
               <li>
-                <span className="block py-2 px-3 text-white bg-blue-700 md:bg-blue-700 md:text-white md:rounded rounded w-full">
-                  <Link to={`/admin/edit/${restaurant}`}>Edit templete</Link>
-                </span>
+                <button
+                  className="block py-2 px-3 text-white bg-blue-700 md:bg-blue-700 md:text-white md:rounded rounded w-full"
+                  onClick={handleDelete}
+                >
+                  delete templete
+                </button>
               </li>
             </ul>
           </div>

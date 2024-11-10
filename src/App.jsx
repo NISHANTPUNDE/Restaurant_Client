@@ -6,6 +6,7 @@ import BlackTheme from "./Menu_Card/BlackTheme";
 import Theme2 from "./Menu_Card/Theme2";
 import Theme3 from "./Menu_Card/Theme3";
 import SuperAdmin from "./pages/SuperAdmin";
+import EditMenuCard from "./pages/EditMenuCard";
 import Auth from "./pages/Auth";
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/:restaurant" element={<Menu />} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/:restaurant" element={<Admin />} />
+        <Route path="/admin/edit/:restaurant" element={<EditMenuCard />} />
         <Route path="/menucard/:restaurant" element={<BlackTheme />} />
         <Route path="/menucard1/:restaurant" element={<Theme2 />} />
         <Route path="/menucard2/:restaurant" element={<Theme3 />} />

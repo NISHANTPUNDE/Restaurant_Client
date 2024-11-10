@@ -3,23 +3,32 @@ import soup from "../assets/soup.jpg";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const BlackTheme = () => {
+const BlackTheme = ({ menuData, dishesByType }) => {
   const { restaurant } = useParams();
   const [menu, setMenu] = useState([]);
-  console.log(restaurant);
+  console.log(menuData);
+  console.log(menu);
+
   useEffect(() => {
-    const fetchRestaurant = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3000/api/getmenuitem/${restaurant}`
-        );
-        setMenu(res?.data?.data[0]);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchRestaurant();
-  }, []);
+    if (!menuData) {
+      const fetchRestaurant = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:3000/api/getmenuitem/${restaurant}`
+          );
+          setMenu(res?.data?.data[0]);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchRestaurant();
+    } else {
+      setMenu((prevMenu) => ({
+        ...menuData,
+        dishesByType: dishesByType || [],
+      }));
+    }
+  }, [menuData, dishesByType, restaurant]);
 
   return (
     <div class="max-w-4xl mx-auto  bg-white shadow-lg">

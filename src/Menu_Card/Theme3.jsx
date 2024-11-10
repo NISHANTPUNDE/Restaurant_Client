@@ -3,40 +3,38 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import bgimg from "../assets/pizza.avif";
 
-const Theme3 = () => {
+const Theme3 = ({ menuData, dishesByType }) => {
   const { restaurant } = useParams();
   const [activeTab, setActiveTab] = useState("breakfast");
   const [menuItems, setMenuItems] = useState({});
 
   useEffect(() => {
-    const fetchRestaurant = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3000/api/getmenuitem/${restaurant}`
-        );
-        const data = res.data.data[0];
-        const fetchedMenuItems = {};
-
-        data.dishesByType.forEach((item) => {
-          fetchedMenuItems[item.dishType.toLowerCase()] = item.dishes.map(
-            (dish) => ({
-              name: dish.dishName,
-              price: `$${dish.price}`,
-              description: dish.description || "A delicious dish to enjoy!",
-              imgSrc: bgimg,
-            })
+    if (!menuData) {
+      const fetchRestaurant = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:3000/api/getmenuitem/${restaurant}`
           );
-        });
+          setMenu(res?.data?.data[0]);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchRestaurant();
+    } else {
+      const fetchedMenuItems = {};
+      dishesByType.forEach((item) => {
+        fetchedMenuItems[item.dishType] = item.dishes.map((dish) => ({
+          title: dish.dishName,
+          price: `$${dish.price}`,
+          description: dish.description || "A delicious dish to enjoy!",
+        }));
+      });
 
-        setMenuItems(fetchedMenuItems);
-        setActiveTab(Object.keys(fetchedMenuItems)[0] || "breakfast");
-      } catch (error) {
-        console.error("Error fetching menu:", error);
-      }
-    };
-
-    fetchRestaurant();
-  }, [restaurant]);
+      setMenuItems(fetchedMenuItems);
+      setActiveTab(Object.keys(fetchedMenuItems)[0] || "");
+    }
+  }, [menuData, dishesByType]);
 
   return (
     <section id="our_menu" className="py-5">
