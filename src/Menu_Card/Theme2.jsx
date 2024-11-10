@@ -1,43 +1,46 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import bgimg from "../assets/menu1.jpeg";
 
-const Theme2 = ({ menuData, dishesByType }) => {
+export default function Theme2() {
+  const { restaurant } = useParams();
   const [activeMenu, setActiveMenu] = useState("");
   const [menuItems, setMenuItems] = useState({});
   const buttonsRef = useRef([]);
 
   useEffect(() => {
-    if (!menuData) {
-      const fetchRestaurant = async () => {
-        try {
-          const res = await axios.get(
-            `http://localhost:3000/api/getmenuitem/${restaurant}`
-          );
-          setMenu(res?.data?.data[0]);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      fetchRestaurant();
-    } else {
-      const fetchedMenuItems = {};
-      dishesByType.forEach((item) => {
-        fetchedMenuItems[item.dishType] = item.dishes.map((dish) => ({
-          title: dish.dishName,
-          price: `$${dish.price}`,
-          description: dish.description || "A delicious dish to enjoy!",
-        }));
-      });
+    const fetchRestaurant = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:3000/api/getmenuitem/${restaurant}`
+        );
+        const data = res.data.data[0];
+        const fetchedMenuItems = {};
+        console.log(res.data);
 
-      setMenuItems(fetchedMenuItems);
-      setActiveMenu(Object.keys(fetchedMenuItems)[0] || "");
-    }
-  }, [menuData, dishesByType]);
+        data.dishesByType.forEach((item) => {
+          fetchedMenuItems[item.dishType] = item.dishes.map((dish) => ({
+            title: dish.dishName,
+            price: `$${dish.price}`,
+            description: dish.description || "A delicious dish to enjoy!",
+          }));
+        });
 
-  const handleMenuClick = (e, menu) => {
-    e.preventDefault();
+        setMenuItems(fetchedMenuItems);
+        setActiveMenu(Object.keys(fetchedMenuItems)[0] || "");
+      } catch (error) {
+        console.error("Error fetching menu:", error);
+      }
+    };
+    fetchRestaurant();
+  }, [restaurant]);
+
+  const handleMenuClick = (menu) => {
     setActiveMenu(menu);
   };
+
+  console.log(menuItems);
 
   return (
     <div
@@ -56,7 +59,7 @@ const Theme2 = ({ menuData, dishesByType }) => {
               key={menu}
               ref={(el) => (buttonsRef.current[index] = el)}
               data-target={menu}
-              onClick={() => handleMenuClick(e, menu)}
+              onClick={() => handleMenuClick(menu)}
               className={`text-white font-semibold py-2 px-4 m-2 uppercase ${
                 activeMenu === menu ? "bg-yellow-400" : "bg-transparent"
               } border border-yellow-400 rounded transition-colors`}
@@ -79,6 +82,4 @@ const Theme2 = ({ menuData, dishesByType }) => {
       </div>
     </div>
   );
-};
-
-export default Theme2;
+}

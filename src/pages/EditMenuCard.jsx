@@ -7,6 +7,7 @@ import Theme2 from "../Menu_Card/Theme2";
 import Theme3 from "../Menu_Card/Theme3";
 
 const Admin = () => {
+  const { restaurant } = useParams();
   const Navigate = useNavigate();
   const [dataRestro, setDataRestro] = useState({
     hotelName: "",
@@ -18,7 +19,6 @@ const Admin = () => {
   const [dishesByType, setDishesByType] = useState([]);
   const [dishType, setDishType] = useState("");
   const [menuImages, setMenuImages] = useState([]);
-  const { restaurant } = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 

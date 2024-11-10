@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const SuperAdmin = () => {
+  const [restaurant, setRestaurant] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -14,11 +15,13 @@ const SuperAdmin = () => {
       const response = await axios.post(
         "http://localhost:3000/api/create-restaurant-account",
         {
+          restaurant: restaurant,
           username: email,
           password,
         }
       );
       setMessage(response.data.message);
+      setRestaurant("");
       setEmail("");
       setPassword("");
     } catch (error) {
@@ -33,6 +36,18 @@ const SuperAdmin = () => {
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded px-8 py-6 w-full max-w-sm"
       >
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            restaurant name:
+          </label>
+          <input
+            type="text"
+            value={restaurant}
+            onChange={(e) => setRestaurant(e.target.value)}
+            required
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Email:
