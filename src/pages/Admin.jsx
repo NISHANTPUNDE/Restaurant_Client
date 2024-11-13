@@ -79,8 +79,7 @@ const Admin = () => {
           restaurant,
         }
       );
-      toast.success(response.data.message)
-      // alert(response.data.message);
+      alert(response.data.message);
       setDataRestro({
         hotelName: "",
         address: "",
@@ -90,8 +89,7 @@ const Admin = () => {
       });
     } catch (error) {
       console.error(error);
-      toast.error("Something Went Wrong. ")
-      // alert("An error occurred. Please check the console for more details.");
+      alert("An error occurred. Please check the console for more details.");
     }
   };
 

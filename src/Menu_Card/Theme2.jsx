@@ -3,46 +3,52 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import bgimg from "../assets/menu1.jpeg";
 
-export default function Theme2() {
+const Theme2 = ({ menuData, dishesByType }) => {
   const { restaurant } = useParams();
-  const [activeMenu, setActiveMenu] = useState("");
   const [menuItems, setMenuItems] = useState({});
+  const [activeMenu, setActiveMenu] = useState("");
   const buttonsRef = useRef([]);
 
   useEffect(() => {
-    const fetchRestaurant = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3000/api/getmenuitem/${restaurant}`
-        );
-        const data = res.data.data[0];
-        const fetchedMenuItems = {};
-        console.log(res.data);
+    if (!menuData) {
+      const fetchRestaurant = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:3000/api/getmenuitem/${restaurant}`
+          );
+          const data = res.data.data[0];
+          const fetchedMenuItems = {};
+          data?.dishesByType.forEach((item) => {
+            fetchedMenuItems[item.dishType] = item.dishes.map((dish) => ({
+              title: dish.dishName,
+              price: `$${dish.price}`,
+              description: dish.description || "A delicious dish to enjoy!",
+            }));
+          });
+          setMenuItems(fetchedMenuItems);
+          setActiveMenu(Object.keys(fetchedMenuItems)[0] || "");
+        } catch (error) {
+          console.error("Error fetching menu:", error);
+        }
+      };
+      fetchRestaurant();
+    } else {
+      const preparedMenuItems = {};
+      (dishesByType || []).forEach((item) => {
+        preparedMenuItems[item.dishType] = item.dishes.map((dish) => ({
+          title: dish.dishName,
+          price: `$${dish.price}`,
+          description: dish.description || "A delicious dish to enjoy!",
+        }));
+      });
+      setMenuItems(preparedMenuItems);
+      setActiveMenu(Object.keys(preparedMenuItems)[0] || "");
+    }
+  }, [menuData, dishesByType, restaurant]);
 
-        data.dishesByType.forEach((item) => {
-          fetchedMenuItems[item.dishType] = item.dishes.map((dish) => ({
-            title: dish.dishName,
-            price: `$${dish.price}`,
-            description: dish.description || "A delicious dish to enjoy!",
-          }));
-        });
-
-        setMenuItems(fetchedMenuItems);
-        setActiveMenu(Object.keys(fetchedMenuItems)[0] || "");
-      } catch (error) {
-        console.error("Error fetching menu:", error);
-      }
-    };
-    fetchRestaurant();
-  }, [restaurant]);
-
-  const handleMenuClick = (e, menu) => {
-    e.preventDefault(); // Prevents the default page refresh
+  const handleMenuClick = (menu) => {
     setActiveMenu(menu);
-    console.log("Menu selected:", menu);
   };
-
-  console.log(menuItems);
 
   return (
     <div
@@ -61,7 +67,7 @@ export default function Theme2() {
               key={menu}
               ref={(el) => (buttonsRef.current[index] = el)}
               data-target={menu}
-              onClick={(e) => handleMenuClick(e, menu)} // Corrected event handling
+              onClick={() => handleMenuClick(menu)}
               className={`text-white font-semibold py-2 px-4 m-2 uppercase ${
                 activeMenu === menu ? "bg-yellow-400" : "bg-transparent"
               } border border-yellow-400 rounded transition-colors`}
@@ -84,4 +90,6 @@ export default function Theme2() {
       </div>
     </div>
   );
-}
+};
+
+export default Theme2;

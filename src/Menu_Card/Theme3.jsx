@@ -3,41 +3,57 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import bgimg from "../assets/pizza.avif";
 
-const Theme3 = () => {
+const Theme3 = ({ menuData, dishesByType }) => {
   const { restaurant } = useParams();
   const [activeTab, setActiveTab] = useState("breakfast");
   const [menuItems, setMenuItems] = useState({});
 
   useEffect(() => {
-    const fetchRestaurant = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3000/api/getmenuitem/${restaurant}`
-        );
-        const data = res.data.data[0];
-        const fetchedMenuItems = {};
-        // console.log(res);
-
-        data.dishesByType.forEach((item) => {
-          fetchedMenuItems[item.dishType.toLowerCase()] = item.dishes.map(
-            (dish) => ({
-              name: dish.dishName,
-              price: `$${dish.price}`,
-              description: dish.description || "A delicious dish to enjoy!",
-              imgSrc: bgimg,
-            })
+    if (!menuData) {
+      const fetchRestaurant = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:3000/api/getmenuitem/${restaurant}`
           );
-        });
+          const data = res.data.data[0];
+          const fetchedMenuItems = {};
 
-        setMenuItems(fetchedMenuItems);
-        setActiveTab(Object.keys(fetchedMenuItems)[0] || "breakfast");
-      } catch (error) {
-        console.error("Error fetching menu:", error);
-      }
-    };
+          data.dishesByType.forEach((item) => {
+            fetchedMenuItems[item.dishType.toLowerCase()] = item.dishes.map(
+              (dish) => ({
+                name: dish.dishName,
+                price: `$${dish.price}`,
+                description: dish.description || "A delicious dish to enjoy!",
+                imgSrc: bgimg,
+              })
+            );
+          });
 
-    fetchRestaurant();
-  }, [restaurant]);
+          setMenuItems(fetchedMenuItems);
+          setActiveTab(Object.keys(fetchedMenuItems)[0] || "breakfast");
+        } catch (error) {
+          console.error("Error fetching menu:", error);
+        }
+      };
+
+      fetchRestaurant();
+    } else {
+      const preparedMenuItems = {};
+      (dishesByType || []).forEach((item) => {
+        preparedMenuItems[item.dishType.toLowerCase()] = item.dishes.map(
+          (dish) => ({
+            name: dish.dishName,
+            price: `$${dish.price}`,
+            description: dish.description || "A delicious dish to enjoy!",
+            imgSrc: bgimg,
+          })
+        );
+      });
+
+      setMenuItems(preparedMenuItems);
+      setActiveTab(Object.keys(preparedMenuItems)[0] || "breakfast");
+    }
+  }, [menuData, dishesByType, restaurant]);
 
   return (
     <section id="our_menu" className="py-5">
@@ -48,25 +64,10 @@ const Theme3 = () => {
           </h1>
           <div className="relative mt-2">
             <div className="absolute w-16 h-[2px] bg-red-600 inset-x-1/2 -translate-x-1/2"></div>
-            <div className="absolute w-8 h-[2px] bg-yellow-500 inset-x-1/2 -translate-x-1/2 top-1"></div>
+            <div className="absolute w-8 h-[2px] bg-yellow-500 inset-x-1/2 top-1 -translate-x-1/2"></div>
           </div>
         </div>
 
-        {/* <div className="flex justify-center mb-8">
-          {Object.keys(menuItems).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2 mx-2 text-lg font-semibold rounded ${
-                activeTab === tab
-                  ? "bg-red-600 text-white"
-                  : "text-black border border-red-600 hover:bg-red-600 hover:text-white"
-              }`}
-            >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </button>
-          ))}
-        </div> */}
         <div className="flex justify-center mb-8">
           {Object.keys(menuItems).map((tab) => (
             <button
@@ -99,7 +100,7 @@ const Theme3 = () => {
               />
               <div>
                 <h4 className="text-xl font-semibold mb-1">
-                  {item.name}{" "}
+                  {item.name}
                   <span className="float-right text-red-600">{item.price}</span>
                 </h4>
                 <p className="text-gray-700">{item.description}</p>
