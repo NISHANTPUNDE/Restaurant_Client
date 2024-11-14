@@ -40,6 +40,10 @@ const Admin = () => {
         const res = await axios.get(
           `http://localhost:3000/api/getmenuitem/${restaurant}`
         );
+        if (res.data.data.length === 0) {
+          alert("Please add menu items first.");
+          Navigate(`/admin/${restaurant}`);
+        }
         setDataRestro(res.data.data[0]);
         setDishesByType(res.data.data[0].dishesByType);
       } catch (error) {
@@ -99,7 +103,7 @@ const Admin = () => {
           restaurant,
         }
       );
-      toast.success(response.data.message)
+      toast.success(response.data.message);
       // alert(response.data.message);
       setDataRestro({
         hotelName: "",
@@ -110,7 +114,7 @@ const Admin = () => {
       });
     } catch (error) {
       console.error(error);
-      toast.error("Something Went Wrong. ")
+      toast.error("Something Went Wrong. ");
       // alert("An error occurred. Please check the console for more details.");
     }
   };
@@ -120,12 +124,12 @@ const Admin = () => {
       const response = await axios.delete(
         `http://localhost:3000/api/restaurant/delete/?restaurant=${restaurant}`
       );
-      toast.success(response.data.message)
+      toast.success(response.data.message);
       // alert(response.data.message);
       Navigate(`/admin/${restaurant}`);
     } catch (error) {
       console.error(error);
-      toast.error("Something Went Wrong. ")
+      toast.error("Something Went Wrong. ");
       // alert("An error occurred. Please check the console for more details.");
     }
   };
