@@ -1,31 +1,42 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+    runs-on: self-hosted
+    
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+        node-version: [20.10.0]
+    
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
 
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Create env file
+      run: |
+        echo "VITE_API_BASE_URL=https://api.restaurant.deveraa.com" >> 
+        
+      working-directory: ${{ github.workspace }}
+
+    - name: Print contents of .env.production file
+      run: cat .env.production
+ 
+    - name: Build
+      run: npm run build --if-present
+      
+    - name: Change Directory
+      run: cd /home/ubuntu/restaurant_client/_work/restro_build/restro_nuild
+    - run: pm2 reload 0 
