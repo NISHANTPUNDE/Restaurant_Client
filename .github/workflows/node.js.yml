@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -27,12 +27,12 @@ jobs:
 
     - name: Create env file
       run: |
-        echo "VITE_API_BASE_URL=https://api.restaurant.deveraa.com" >> 
+       echo "VITE_API_BASE_URL=https://api.restaurant.deveraa.com" >> /root/restaurant_client/_work/_temp/25306ca9-433c-4f95-b806-59a824e753fb.sh
         
       working-directory: ${{ github.workspace }}
 
-    - name: Print contents of .env.production file
-      run: cat .env.production
+    - name: Print contents of .env file
+      run: cat .env
  
     - name: Build
       run: npm run build --if-present
