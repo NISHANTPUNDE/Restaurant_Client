@@ -1,0 +1,42 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    
+    strategy:
+      matrix:
+        node-version: [20.10.0]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Create env file
+      run: |
+       echo "VITE_API_BASE_URL=https://api.restaurant.deveraa.com" >> /root/restaurant_client/_work/_temp/25306ca9-433c-4f95-b806-59a824e753fb.sh
+        
+      working-directory: ${{ github.workspace }}
+
+    - name: Print contents of .env file
+      run: cat .env
+ 
+    - name: Build
+      run: npm run build --if-present
+      
+    - name: Change Directory
+      run: cd /home/ubuntu/restaurant_client/_work/restro_build/restro_nuild
+    - run: pm2 reload 0 
