@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import soup from "../assets/soup.jpg";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../config/config";
 
 const Menu = () => {
   const { restaurant } = useParams();
@@ -10,7 +11,7 @@ const Menu = () => {
     const fetchRestaurant = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/getmenuitem/${restaurant}`
+          `${API_BASE_URL}/api/getmenuitem/${restaurant}`
         );
         setMenu(res.data.data[0]);
       } catch (error) {

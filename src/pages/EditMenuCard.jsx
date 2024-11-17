@@ -5,6 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import BlackTheme from "../Menu_Card/BlackTheme";
 import Theme2 from "../Menu_Card/Theme2";
 import Theme3 from "../Menu_Card/Theme3";
+import { API_BASE_URL } from "../config/config";
 
 const Admin = () => {
   const { restaurant } = useParams();
@@ -25,7 +26,7 @@ const Admin = () => {
   useEffect(() => {
     const fetchMenuImages = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/getmenuimages");
+        const res = await axios.get(`${API_BASE_URL}/api/getmenuimages`);
         setMenuImages(res.data.images);
       } catch (error) {
         console.error("Error fetching menu images:", error);
@@ -38,7 +39,7 @@ const Admin = () => {
     const fetchRestaurant = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/getmenuitem/${restaurant}`
+          `${API_BASE_URL}api/getmenuitem/${restaurant}`
         );
         if (res.data.data.length === 0) {
           alert("Please add menu items first.");
@@ -95,14 +96,11 @@ const Admin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
-        "http://localhost:3000/api/restaurant/edit",
-        {
-          dataRestro,
-          dishesByType,
-          restaurant,
-        }
-      );
+      const response = await axios.put(`${API_BASE_URL}/api/restaurant/edit`, {
+        dataRestro,
+        dishesByType,
+        restaurant,
+      });
       toast.success(response.data.message);
       // alert(response.data.message);
       setDataRestro({
@@ -122,7 +120,7 @@ const Admin = () => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/restaurant/delete/?restaurant=${restaurant}`
+        `${API_BASE_URL}/api/restaurant/delete/?restaurant=${restaurant}`
       );
       toast.success(response.data.message);
       // alert(response.data.message);
@@ -143,7 +141,7 @@ const Admin = () => {
   };
 
   const trimmedFilename = dataRestro.dishmenuTemplete
-    .replace("http://localhost:3000/public/", "")
+    .replace(`${API_BASE_URL}/public/`, "")
     .replace(/\.[^/.]+$/, "");
   const ThemeComponent = trimmedFilename;
   console.log(ThemeComponent);
@@ -158,7 +156,7 @@ const Admin = () => {
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <img
-              src="https://deveraa.com/_next/static/media/deveraa.52ebdceb.jpg"
+              src="https://blog.deveraa.com/_next/static/media/deveraa.52ebdceb.jpg"
               className="h-8"
               alt="Flowbite Logo"
             />

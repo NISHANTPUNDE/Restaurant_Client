@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import bgimg from "../assets/menu1.jpeg";
+import { API_BASE_URL } from "../config/config";
 
 const Theme2 = ({ menuData, dishesByType }) => {
   const { restaurant } = useParams();
@@ -14,7 +15,7 @@ const Theme2 = ({ menuData, dishesByType }) => {
       const fetchRestaurant = async () => {
         try {
           const res = await axios.get(
-            `http://localhost:3000/api/getmenuitem/${restaurant}`
+            `${API_BASE_URL}/api/getmenuitem/${restaurant}`
           );
           const data = res.data.data[0];
           const fetchedMenuItems = {};
@@ -49,6 +50,7 @@ const Theme2 = ({ menuData, dishesByType }) => {
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
   };
+  console.log(menuItems);
 
   return (
     <div
@@ -68,9 +70,17 @@ const Theme2 = ({ menuData, dishesByType }) => {
               ref={(el) => (buttonsRef.current[index] = el)}
               data-target={menu}
               onClick={() => handleMenuClick(menu)}
-              className={`text-white font-semibold py-2 px-4 m-2 uppercase ${
-                activeMenu === menu ? "bg-yellow-400" : "bg-transparent"
-              } border border-yellow-400 rounded transition-colors`}
+              className={`text-white font-semibold py-2 px-4 m-2 uppercase  border border-gray-800 rounded transition-colors ${
+                menu ? "bg-red-600" : ""
+              }`}
+              style={{
+                backgroundColor:
+                  activeMenu === menu
+                    ? menuData?.dishmenuColor
+                      ? menuData?.dishmenuColor
+                      : menu?.dishmenuColor
+                    : "transparent",
+              }}
             >
               {menu}
             </button>

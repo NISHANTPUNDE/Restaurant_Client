@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import soup from "../assets/soup.jpg";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../config/config";
 
 const BlackTheme = ({ menuData, dishesByType }) => {
   const { restaurant } = useParams();
@@ -14,7 +15,7 @@ const BlackTheme = ({ menuData, dishesByType }) => {
       const fetchRestaurant = async () => {
         try {
           const res = await axios.get(
-            `http://localhost:3000/api/getmenuitem/${restaurant}`
+            `${API_BASE_URL}/api/getmenuitem/${restaurant}`
           );
           setMenu(res?.data?.data[0]);
         } catch (error) {
@@ -34,7 +35,11 @@ const BlackTheme = ({ menuData, dishesByType }) => {
     <div class="max-w-4xl mx-auto  bg-white shadow-lg">
       <div class="grid grid-cols-4">
         <div
-          style={{ backgroundColor: menu?.dishmenuColor }}
+          style={{
+            backgroundColor: menu?.dishmenuColor
+              ? menu?.dishmenuColor
+              : "yellow",
+          }}
           className="md:p-8 relative"
         >
           <div class="absolute top-1/3 md:top-2/3 transform -rotate-90 text-white text-5xl  md:text-7xl font-bold">

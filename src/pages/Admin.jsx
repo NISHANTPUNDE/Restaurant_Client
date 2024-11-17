@@ -5,7 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import BlackTheme from "../Menu_Card/BlackTheme";
 import Theme2 from "../Menu_Card/Theme2";
 import Theme3 from "../Menu_Card/Theme3";
-
+import { API_BASE_URL } from "../config/config";
 const Admin = () => {
   const [dataRestro, setDataRestro] = useState({
     hotelName: "",
@@ -22,7 +22,7 @@ const Admin = () => {
   useEffect(() => {
     const fetchMenuImages = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/getmenuimages");
+        const res = await axios.get(`${API_BASE_URL}/api/getmenuimages`);
         setMenuImages(res.data.images);
       } catch (error) {
         console.error("Error fetching menu images:", error);
@@ -71,14 +71,11 @@ const Admin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/restaurant/add",
-        {
-          dataRestro,
-          dishesByType,
-          restaurant,
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/api/restaurant/add`, {
+        dataRestro,
+        dishesByType,
+        restaurant,
+      });
       alert(response.data.message);
       setDataRestro({
         hotelName: "",
@@ -109,7 +106,7 @@ const Admin = () => {
   };
 
   const trimmedFilename = dataRestro.dishmenuTemplete
-    .replace("http://localhost:3000/public/", "")
+    .replace(`http://api.restaurant.deveraa.com/public/`, "")
     .replace(/\.[^/.]+$/, "");
   const ThemeComponent = trimmedFilename;
 
@@ -121,12 +118,9 @@ const Admin = () => {
       {/* navbar */}
       <nav className="bg-white  border-gray-200 dark:bg-gray-900">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a
-            href="/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
-          >
+          <a className="flex items-center space-x-3 rtl:space-x-reverse">
             <img
-              src="https://deveraa.com/_next/static/media/deveraa.52ebdceb.jpg"
+              src="https://blog.deveraa.com/_next/static/media/deveraa.52ebdceb.jpg"
               className="h-8"
               alt="Flowbite Logo"
             />

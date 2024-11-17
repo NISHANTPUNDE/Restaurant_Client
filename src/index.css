@@ -1,43 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Merienda:wght@300;400;700&display=swap");
 
-@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap');
-
-
-body {
-  background-color: white;
-  color: black;
-}
-
-body.dark {
-  background-color: black;
-  color: white;
-}
-
-#color-picker::-webkit-color-swatch {
-  border-radius: 100%;
-}
-
-:root {
-  --primary-color: #ffc200;
-  --dark-color: #303030;
-  --light-color: #fafafa;
-}
-
-.bg-primary {
-  background-color: var(--primary-color);
-}
-
-.text-dark {
-  color: var(--dark-color);
-}
-
-.text-light {
-  color: var(--light-color);
-}
-
-.bg-light {
-  background-color: var(--light-color);
-}
+@import url("https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap");

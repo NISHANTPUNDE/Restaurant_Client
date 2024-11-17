@@ -1,9 +1,10 @@
 import axios from "axios";
+import { API_BASE_URL } from "../config/config";
 
 export const fetchMenuItems = async (restaurant) => {
     try {
         const res = await axios.get(
-            `http://localhost:3000/api/getmenuitem/${restaurant}`
+            `${API_BASE_URL}/api/getmenuitem/${restaurant}`
         );
         const data = res.data.data[0];
         const fetchedMenuItems = {};

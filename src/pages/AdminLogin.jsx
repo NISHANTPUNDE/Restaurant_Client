@@ -23,21 +23,21 @@ const AdminLogin = () => {
     await fetchData(requestData);
   };
 
-  useEffect(() => {
-    cookies.restaurant_token && navigate(`/admin/${data.restaurant}`);
-  }, [cookies.token, navigate]);
+  // useEffect(() => {
+  //   cookies.restaurant_token && navigate(`/admin/${data.restaurant}`);
+  // }, [cookies.token, navigate]);
 
   useEffect(() => {
     if (data) {
       navigate(`/admin/${data.restaurant}`);
-      setCookie("restaurant_token", data.token);
+      // setCookie("restaurant_token", data.token);
     }
   }, [data, navigate]);
 
   useEffect(() => {
     if (error) {
       setErrorMessage(error);
-      removeCookie("restaurant_token");
+      // removeCookie("restaurant_token");
     }
   }, [error]);
   return (

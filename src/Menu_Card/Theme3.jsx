@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import bgimg from "../assets/pizza.avif";
+import { API_BASE_URL } from "../config/config";
 
 const Theme3 = ({ menuData, dishesByType }) => {
   const { restaurant } = useParams();
@@ -13,7 +14,7 @@ const Theme3 = ({ menuData, dishesByType }) => {
       const fetchRestaurant = async () => {
         try {
           const res = await axios.get(
-            `http://localhost:3000/api/getmenuitem/${restaurant}`
+            `${API_BASE_URL}/api/getmenuitem/${restaurant}`
           );
           const data = res.data.data[0];
           const fetchedMenuItems = {};
@@ -77,10 +78,16 @@ const Theme3 = ({ menuData, dishesByType }) => {
                 setActiveTab(tab);
               }}
               className={`px-6 py-2 mx-2 text-lg font-semibold rounded ${
-                activeTab === tab
-                  ? "bg-red-600 text-white"
-                  : "text-black border border-red-600 hover:bg-red-600 hover:text-white"
+                tab ? "bg-red-600" : ""
               }`}
+              style={{
+                backgroundColor:
+                  activeTab === tab
+                    ? menuData?.dishmenuColor
+                      ? menuData?.dishmenuColor
+                      : tab?.dishmenuColor
+                    : "transparent",
+              }}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
             </button>
