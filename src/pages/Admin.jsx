@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import BlackTheme from "../Menu_Card/BlackTheme";
 import Theme2 from "../Menu_Card/Theme2";
 import Theme3 from "../Menu_Card/Theme3";
+import Theme4 from "../Menu_Card/Theme4";
 import { API_BASE_URL } from "../config/config";
 import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
@@ -763,6 +764,8 @@ const Admin = () => {
                   <Theme2 menuData={dataRestro} dishesByType={dishesByType} />
                 ) : ThemeComponent === "http://localhost:3000/public/Theme3" ? (
                   <Theme3 menuData={dataRestro} dishesByType={dishesByType} />
+                ) : ThemeComponent === "http://localhost:3000/public/Theme4" ? (
+                  <Theme4 menuData={dataRestro} dishesByType={dishesByType} />
                 ) : null
               ) : null}
             </div>

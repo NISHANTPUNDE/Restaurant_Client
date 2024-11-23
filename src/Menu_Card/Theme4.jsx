@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./template1.css";
 import { API_BASE_URL } from "../config/config";
-const bgimg = "path/to/default-image.jpg"; // Replace with your default image path
+import bg1 from "../assets/bg1.png";
 
 const MenuItem = ({ title, price }) => (
   <div className="menu">
@@ -39,7 +39,7 @@ const Theme4 = () => {
               name: dish.dishName,
               price: `$${dish.price}`,
               description: dish.description || "A delicious dish to enjoy!",
-              imgSrc: bgimg,
+              imgSrc: bg1,
             })
           );
         });
