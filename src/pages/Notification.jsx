@@ -13,7 +13,17 @@ const Notifications = () => {
         const response = await axios.get(
           `${API_BASE_URL}/api/expiring-subscriptions?days=365`
         );
-        setExpiringSubscriptions(response.data.data);
+
+        // Filter for subscriptions expiring in 5 days or fewer
+        const currentDate = new Date();
+        const filteredSubscriptions = response.data.data.filter((item) => {
+          const subscriptionEnd = new Date(item.subscription_upto);
+          const daysRemaining =
+            (subscriptionEnd - currentDate) / (1000 * 60 * 60 * 24); // Convert ms to days
+          return daysRemaining > 0 && daysRemaining <= 5; // Within 5 days
+        });
+
+        setExpiringSubscriptions(filteredSubscriptions);
       } catch (error) {
         setMessage(
           "Failed to fetch notifications: " +
@@ -73,7 +83,7 @@ const Notifications = () => {
                     colSpan="3"
                     className="px-6 py-4 text-center text-sm text-gray-500"
                   >
-                    No expiring subscriptions found.
+                    No subscriptions expiring in the next 5 days.
                   </td>
                 </tr>
               )}

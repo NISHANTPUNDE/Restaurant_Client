@@ -147,7 +147,8 @@ const SuperAdmin = () => {
               className="shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option value="1-month">1 Month</option>
-              <option value="6-months">6 Months</option>
+              <option value="3-month">3 Months</option>
+              <option value="6-month">6 Months</option>
               <option value="1-year">1 Year</option>
             </select>
           </div>
