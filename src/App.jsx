@@ -7,10 +7,11 @@ import Theme2 from "./Menu_Card/Theme2";
 import Theme3 from "./Menu_Card/Theme3";
 import SuperAdmin from "./pages/SuperAdmin";
 import EditMenuCard from "./pages/EditMenuCard";
-import ViewRestaurants from "./pages/ViewRestaurants";
 import Auth from "./pages/Auth";
 import Navbar from "./components/superadmin/Navbar";
 import ManageSubscriptions from "./pages/ManageSubscriptions";
+import Notification from "./pages/Notification";
+import Theme4 from "./Menu_Card/Theme4";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
       <Route path="/" element={<Auth />} />
 
       <Route
-        path="/superadmin"
+        path="/superadmin/create-restaurant"
         element={
           <>
             <Navbar />
@@ -27,20 +28,20 @@ function App() {
         }
       />
       <Route
-        path="/superadmin/viewrestaurants"
-        element={
-          <>
-            <Navbar />
-            <ViewRestaurants />
-          </>
-        }
-      />
-      <Route
-        path="/superadmin/editrestaurants"
+        path="/superadmin"
         element={
           <>
             <Navbar />
             <ManageSubscriptions />
+          </>
+        }
+      />
+      <Route
+        path="/superadmin/notifications"
+        element={
+          <>
+            <Navbar />
+            <Notification />
           </>
         }
       />
@@ -52,6 +53,7 @@ function App() {
       <Route path="/menucard/:restaurant" element={<BlackTheme />} />
       <Route path="/menucard1/:restaurant" element={<Theme2 />} />
       <Route path="/menucard2/:restaurant" element={<Theme3 />} />
+      <Route path="/menucard3/:restaurant" element={<Theme4 />} />
     </Routes>
   );
 }
