@@ -60,6 +60,14 @@ const Theme3 = ({ menuData, dishesByType }) => {
     <section id="our_menu" className="py-5">
       <div className="container mx-auto">
         <div className="text-center mb-8">
+        <div class="text-red-600 font-serif flex items-center justify-center text-5xl font-bold uppercase ">
+          <p>{menuData.hotelName}</p>
+        </div>
+        <div class="text-yellow-500 font-serif flex flex-col items-center justify-center text-2xl font-bold uppercase my-5">
+          <p className="text-sm">{menuData.address}</p>
+         
+          <p className="text-sm">{menuData.phone}</p>
+        </div>
           <h1 className="text-4xl font-bold text-red-600 capitalize">
             Our Menu
           </h1>

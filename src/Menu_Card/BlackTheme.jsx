@@ -56,8 +56,14 @@ const BlackTheme = ({ menuData, dishesByType }) => {
         </div>
 
         <div class="p-8">
-          <h1 class="text-5xl font-bold">{restaurant}</h1>
-          <h2 class="text-2xl font-semibold text-gray-500 mb-2">HOTEL</h2>
+        <div class="font-serif flex items-center justify-center text-5xl font-bold uppercase ">
+          <p>{menuData.hotelName}</p>
+        </div>
+        <div class="font-serif flex flex-col items-center justify-center text-2xl font-bold uppercase my-5">
+          <p className="text-sm">{menuData.address}</p>
+        </div>
+          {/* <h1 class="text-5xl font-bold">{restaurant}</h1>
+          <h2 class="text-2xl font-semibold text-gray-500 mb-2">HOTEL</h2> */}
           <div class="flex items-center mb-6">
             <span class="text-xl">📞</span>
             <h3 class="text-xl font-semibold">{menu?.phone}</h3>

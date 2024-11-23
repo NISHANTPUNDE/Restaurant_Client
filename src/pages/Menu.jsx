@@ -21,7 +21,7 @@ const Menu = () => {
     fetchRestaurant();
   }, []);
   console.log(menu);
-  console.log(menu.dishesByType?.map((item) => item?.dishType));
+  console.log("menu card data",menu.dishesByType?.map((item) => item?.dishType));
   console.log(menu.dishesByType?.map((item) => item?.dishes));
 
   return (

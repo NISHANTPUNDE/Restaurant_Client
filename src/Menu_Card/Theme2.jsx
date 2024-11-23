@@ -38,7 +38,7 @@ const Theme2 = ({ menuData, dishesByType }) => {
       (dishesByType || []).forEach((item) => {
         preparedMenuItems[item.dishType] = item.dishes.map((dish) => ({
           title: dish.dishName,
-          price: `$${dish.price}`,
+          price: `Rs. ${dish.price}`,
           description: dish.description || "A delicious dish to enjoy!",
         }));
       });
@@ -47,10 +47,12 @@ const Theme2 = ({ menuData, dishesByType }) => {
     }
   }, [menuData, dishesByType, restaurant]);
 
-  const handleMenuClick = (menu) => {
+  const handleMenuClick = (e, menu) => {
+    e.preventDefault();
     setActiveMenu(menu);
   };
   console.log(menuItems);
+  console.log("menuData", menuData);
 
   return (
     <div
@@ -60,16 +62,28 @@ const Theme2 = ({ menuData, dishesByType }) => {
       }}
     >
       <div className="max-w-3xl mx-auto p-8 text-white">
-        <h2 className="text-5xl font-bold border-b-4 border-yellow-400 mb-8 inline-block">
+        <div class="font-serif flex items-center justify-center text-4xl font-bold uppercase ">
+          <p>{menuData.hotelName}</p>
+        </div>
+        <div class="font-serif flex flex-col items-center justify-center text-2xl font-bold uppercase my-5">
+          <p className="text-sm">{menuData.address}</p>
+         
+          <p className="text-sm">{menuData.phone}</p>
+          <h3 className="text-4xl font-bold border-b-4 mt-6 border-yellow-400 mb-8 inline-block">
           Our Menu
-        </h2>
+        </h3>
+        </div>
+       
         <div className="flex justify-center flex-wrap mb-8">
           {Object.keys(menuItems).map((menu, index) => (
             <button
               key={menu}
               ref={(el) => (buttonsRef.current[index] = el)}
               data-target={menu}
-              onClick={() => handleMenuClick(menu)}
+              onClick={(e) => {
+                e.preventDefault();
+                handleMenuClick(e, menu);
+              }}
               className={`text-white font-semibold py-2 px-4 m-2 uppercase  border border-gray-800 rounded transition-colors ${
                 menu ? "bg-red-600" : ""
               }`}
@@ -93,7 +107,7 @@ const Theme2 = ({ menuData, dishesByType }) => {
                 <h3 className="text-2xl font-bold">{item.title}</h3>
                 <span className="text-yellow-400 text-xl">{item.price}</span>
               </div>
-              <p className="text-gray-300">{item.description}</p>
+              {/* <p className="text-gray-300">{item.description}</p> */}
             </div>
           ))}
         </div>
