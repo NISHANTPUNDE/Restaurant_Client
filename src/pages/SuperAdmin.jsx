@@ -33,7 +33,11 @@ const SuperAdmin = () => {
 
     if (plan === "1-month")
       subscription_upto.setMonth(subscription_upto.getMonth() + 1);
-    if (plan === "6-months")
+    if (plan === "2-month")
+      subscription_upto.setMonth(subscription_upto.getMonth() + 2);
+    if (plan === "3-month")
+      subscription_upto.setMonth(subscription_upto.getMonth() + 3);
+    if (plan === "6-month")
       subscription_upto.setMonth(subscription_upto.getMonth() + 6);
     if (plan === "1-year")
       subscription_upto.setFullYear(subscription_upto.getFullYear() + 1);

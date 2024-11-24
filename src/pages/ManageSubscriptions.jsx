@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { API_BASE_URL } from "../config/config";
 
 const ManageSubscriptions = () => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -15,7 +16,7 @@ const ManageSubscriptions = () => {
   });
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/getallrestaurants")
+    fetch(`${API_BASE_URL}/api/getallrestaurants`)
       .then((response) => response.json())
       .then((data) =>
         setSubscriptions(
@@ -52,7 +53,7 @@ const ManageSubscriptions = () => {
   };
 
   const handleSave = (id) => {
-    fetch(`http://localhost:3000/api/updatesubscription/${id}`, {
+    fetch(`${API_BASE_URL}/api/updatesubscription/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +83,7 @@ const ManageSubscriptions = () => {
   };
 
   const handleDelete = (subscription) => {
-    fetch(`http://localhost:3000/api/delete-restaurant/${subscription._id}`, {
+    fetch(`${API_BASE_URL}/api/delete-restaurant/${subscription._id}`, {
       method: "DELETE",
     })
       .then(() => {
