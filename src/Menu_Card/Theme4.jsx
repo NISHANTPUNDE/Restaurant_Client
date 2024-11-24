@@ -54,6 +54,8 @@ const Theme4 = () => {
     fetchRestaurant();
   }, [restaurant]);
 
+  console.log("title")
+
   return (
     <section
       id="popular"

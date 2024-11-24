@@ -1,13 +1,12 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import BlackTheme from "../Menu_Card/BlackTheme";
 import Theme2 from "../Menu_Card/Theme2";
 import Theme3 from "../Menu_Card/Theme3";
-import Theme4 from "../Menu_Card/Theme4";
 import { API_BASE_URL } from "../config/config";
 import toast, { Toaster } from "react-hot-toast";
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2'
 import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
@@ -25,47 +24,31 @@ const Admin = () => {
   const { restaurant } = useParams();
   const [previouscustdata, setpreviouscustdata] = useState(false);
   const [updatemode, setupdatemode] = useState(false);
-  const [isSubscriptionExpired, setIsSubscriptionExpired] = useState(false);
 
+  console.log("previouscustdata", previouscustdata);
   useEffect(() => {
-    const checkSubscription = async () => {
-      try {
-        console.log("restaurant", restaurant);
-        const res = await axios.get(
-          `${API_BASE_URL}/api/subscription_upto/${restaurant}`
-        );
-        const { subscription_upto } = res.data;
-
-        if (subscription_upto) {
-          const currentDate = new Date();
-          const expiryDate = new Date(subscription_upto);
-
-          if (expiryDate < currentDate) {
-            setIsSubscriptionExpired(true);
-
-            // Show alert
-            Swal.fire({
-              icon: "error",
-              title: "Subscription Expired",
-              text: "Your subscription has expired. You will be logged out.",
-            });
-
-            // Logout after 5 seconds
-            setTimeout(() => {
-              localStorage.removeItem("authToken"); // Remove token or user info
-              navigate("/admin");
-            }, 3000);
-          }
-        } else {
-          console.error("No subscription_upto data found");
+    fetch(`http://localhost:3000/api/getmenuitem/${restaurant}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-      } catch (error) {
-        console.error("Error fetching subscription data:", error);
-      }
-    };
-
-    checkSubscription();
-  }, [restaurant, navigate]);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Response data:", data.data.length); // Log the data correctly
+        setpreviouscustdata(data.data.length === 0 ? false : true);
+        setDataRestro({
+          hotelName: data.data[0].hotelName,
+          address: data.data[0].address,
+          phone: data.data[0].phone,
+          dishmenuTemplete: data.data[0].dishmenuTemplete,
+          dishmenuColor: data.data[0].dishmenuColor,
+        });
+        console.log("dishdata", data.data[0].dishesByType);
+        setDishesByType(data.data[0].dishesByType);
+      })
+      .catch((error) => console.error("Error fetching restaurants:", error));
+  }, []);
 
   useEffect(() => {
     const fetchMenuImages = async () => {
@@ -195,9 +178,9 @@ const Admin = () => {
       }).then(() => {
         window.location.reload(); // Refresh the page when "OK" is clicked
       });
-
-      navigate(`/admin/${restaurant}`);
-      //  location.reload();
+      
+     navigate(`/admin/${restaurant}`);
+    //  location.reload();
       // {`/admin/${restaurant}`}
       // alert(response.data.message);
       // setDataRestro({
@@ -219,23 +202,25 @@ const Admin = () => {
     }
   };
 
+
   const menuDelete = () => {
     Swal.fire({
       title: "Do you Really want to Delete the Menucard ?",
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Save",
-      denyButtonText: `Don't save`,
+      denyButtonText: `Don't save`
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         Delete();
+       
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
       }
     });
-    //
-  };
+    // 
+  }
 
   // delete menu card
   const Delete = async () => {
@@ -266,6 +251,8 @@ const Admin = () => {
       // alert("An error occurred. Please check the console for more details.");
     }
   };
+
+  console.log("dataRestro",dataRestro)
 
   return (
     <>
@@ -403,7 +390,7 @@ const Admin = () => {
                     <img
                       src={image}
                       alt="card-image"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-inherit"
                     />
                   </div>
                 </div>
@@ -764,8 +751,6 @@ const Admin = () => {
                   <Theme2 menuData={dataRestro} dishesByType={dishesByType} />
                 ) : ThemeComponent === "http://localhost:3000/public/Theme3" ? (
                   <Theme3 menuData={dataRestro} dishesByType={dishesByType} />
-                ) : ThemeComponent === "http://localhost:3000/public/Theme4" ? (
-                  <Theme4 menuData={dataRestro} dishesByType={dishesByType} />
                 ) : null
               ) : null}
             </div>

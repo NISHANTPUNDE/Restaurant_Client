@@ -54,6 +54,8 @@ const Theme2 = ({ menuData, dishesByType }) => {
   console.log(menuItems);
   console.log("menuData", menuData);
 
+  console.log("title theme 2")
+
   return (
     <div
       className="min-h-screen flex items-center bg-cover bg-center"
@@ -69,7 +71,7 @@ const Theme2 = ({ menuData, dishesByType }) => {
           <p className="text-sm">{menuData.address}</p>
          
           <p className="text-sm">{menuData.phone}</p>
-          <h3 className="text-4xl font-bold border-b-4 mt-6 border-yellow-400 mb-8 inline-block">
+          <h3 className="text-white capitalize text-4xl font-bold border-b-4 mt-6 border-yellow-400 mb-8 inline-block">
           Our Menu
         </h3>
         </div>
@@ -102,9 +104,9 @@ const Theme2 = ({ menuData, dishesByType }) => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {menuItems[activeMenu]?.map((item, index) => (
-            <div key={index} className="border-b border-gray-600 pb-4">
+            <div key={index} className="border-b border-gray-600 pb-4 ml-[30px]" >
               <div className="flex items-baseline justify-between mb-2">
-                <h3 className="text-2xl font-bold">{item.title}</h3>
+                <h3 className="text-white text-2xl font-bold">{item.title}</h3>
                 <span className="text-yellow-400 text-xl">{item.price}</span>
               </div>
               {/* <p className="text-gray-300">{item.description}</p> */}

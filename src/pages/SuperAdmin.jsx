@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../config/config";
 import Navbar from "../components/superadmin/Navbar";
+import Swal from 'sweetalert2'
 
 const SuperAdmin = () => {
   const navigate = useNavigate();
@@ -52,6 +53,11 @@ const SuperAdmin = () => {
         }
       );
       setMessage(response.data.message);
+      Swal.fire({
+        title: "Good job!",
+        text: (response.data.message),
+        icon: "success"
+      });
       // Reset form fields
       setRestaurant("");
       setEmail("");
@@ -158,7 +164,7 @@ const SuperAdmin = () => {
             Create Account
           </button>
         </form>
-        {message && <p className="mt-4 text-center text-gray-700">{message}</p>}
+        {/* {message && <p className="mt-4 text-center text-gray-700">{message}</p>} */}
       </div>
     </>
   );

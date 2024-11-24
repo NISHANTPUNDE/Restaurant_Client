@@ -99,7 +99,7 @@ const ManageSubscriptions = () => {
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Manage Subscriptions
         </h1>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto h-[90vh]">
           <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
             <thead>
               <tr>
