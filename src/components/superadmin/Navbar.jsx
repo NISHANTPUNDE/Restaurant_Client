@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { FaBell } from "react-icons/fa"; // Notification icon
 import { FaBars } from "react-icons/fa"; // Mobile menu icon
 import { IoMdAdd } from "react-icons/io";
+import { IoHomeOutline } from "react-icons/io5"; 
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +22,16 @@ const Navbar = () => {
           />
         </NavLink>
 
+        
+
         <div className="hidden md:flex items-center md:order-2">
+        <NavLink
+            to="/"
+            className="p-2 text-gray-500 rounded-full hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
+            aria-label="Dashboard"
+          >
+            <IoHomeOutline  className="w-6 h-6" />
+          </NavLink>
           <NavLink
             to="/superadmin/create-restaurant"
             className="p-2 text-gray-500 rounded-full hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"

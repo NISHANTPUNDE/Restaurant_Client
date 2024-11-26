@@ -73,7 +73,10 @@ const Notifications = () => {
                     {item.username}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    {new Date(item.subscription_upto).toLocaleDateString()}
+                  <span className="inline-flex items-center rounded-md bg-red-50 px-3 py-1 text-sm font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                  {new Date(item.subscription_upto).toLocaleDateString()}
+                          </span>
+                    {/* {new Date(item.subscription_upto).toLocaleDateString()} */}
                   </td>
                 </tr>
               ))}

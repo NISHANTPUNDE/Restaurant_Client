@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { API_BASE_URL } from "../config/config";
+import { IoMdDownload } from "react-icons/io";
+import QRCode from "qrcode";
 
 const ManageSubscriptions = () => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [editing, setEditing] = useState(null);
+  const [searchinput, setsearchinput] = useState("");
   const [formData, setFormData] = useState({
     restaurant: "",
     username: "",
@@ -14,6 +17,18 @@ const ManageSubscriptions = () => {
     agent: "", // Agent name
     subscription_plan: "", // Subscription plan
   });
+  const [filteredSubscriptions, setFilteredSubscriptions] = useState([]);
+
+  // useEffect(() => {
+  //   console.log("searchinput",searchinput)
+  // }, [searchinput]);
+  // Update filteredSubscriptions when searchInput or subscriptions change
+  useEffect(() => {
+    const filteredData = subscriptions.filter((item) =>
+      item.restaurant.toLowerCase().includes(searchinput.toLowerCase())
+    );
+    setFilteredSubscriptions(filteredData);
+  }, [searchinput, subscriptions]);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/getallrestaurants`)
@@ -31,7 +46,7 @@ const ManageSubscriptions = () => {
       )
       .catch((error) => console.error("Error fetching subscriptions:", error));
   }, []);
-  console.log("subscriptions", subscriptions);
+  // console.log("subscriptions", subscriptions);
 
   const handleEditClick = (subscription) => {
     setEditing(subscription._id);
@@ -52,7 +67,10 @@ const ManageSubscriptions = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSave = (id) => {
+  // update resto
+  const handleSave = (e, id) => {
+    e.preventDefault();
+    console.log("formData", formData);
     fetch(`${API_BASE_URL}/api/updatesubscription/${id}`, {
       method: "PUT",
       headers: {
@@ -77,12 +95,35 @@ const ManageSubscriptions = () => {
           )
         );
         setEditing(null);
-      })
-      .catch((error) => console.error("Error updating subscription:", error));
-    window.location.reload();
+      });
+    Swal.fire({
+      title: "Update !",
+      text: `Update Successfully `,
+      icon: "success",
+    }).catch((error) => console.error("Error updating subscription:", error));
+    // window.location.reload();
   };
 
   const handleDelete = (subscription) => {
+    console.log("subscription", subscription.restaurant);
+    Swal.fire({
+      title: `Do you Really want to Delete the ${subscription.restaurant} ?`,
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+      denyButtonText: `Don't Delete`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        DeleteResto(subscription);
+      } else if (result.isDenied) {
+        Swal.fire(`${subscription.restaurant} was not delete`, "", "info");
+      }
+    });
+    //
+  };
+
+  const DeleteResto = (subscription) => {
     fetch(`${API_BASE_URL}/api/delete-restaurant/${subscription._id}`, {
       method: "DELETE",
     })
@@ -90,19 +131,81 @@ const ManageSubscriptions = () => {
         setSubscriptions((prev) =>
           prev.filter((sub) => sub._id !== subscription._id)
         );
+        Swal.fire({
+          title: "Delete !",
+          text: `${subscription.restaurant}  was Delete `,
+          icon: "success",
+        });
       })
       .catch((error) => console.error("Error deleting subscription:", error));
   };
 
+  console.log("searchinput", searchinput);
+
+  const genrateQR =  async  (restoname) => {
+    try {
+      const encodedName = encodeURIComponent(restoname); // Encode restaurant name
+      const qrURL = `http://localhost:5173/${encodedName}`; // Generate QR URL
+      const qrDataURL = await QRCode.toDataURL(qrURL); // Generate QR code as Data URL
+  
+      // Create a download link for the QR code
+      const link = document.createElement("a");
+      link.href = qrDataURL;
+      link.download = `${restoname}.png`; // Download name
+      link.click();
+  
+      console.log("QR Code Generated and Downloaded:", restoname);
+    } catch (error) {
+      console.error("Error generating QR code:", error);
+    }
+  };
+  
+
   return (
     <div className="min-h-screen bg-gray-100 py-20">
       <div className="container mx-auto px-4">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Manage Subscriptions
-        </h1>
+        <div className="flex justify-between">
+          <h1 className="text-2xl font-bold text-gray-800 mb-6">
+            Manage Subscriptions
+          </h1>
+          <form className="w-[50%] ">
+            <label
+              htmlFor="default-search"
+              className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+            >
+              Search
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg
+                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="search"
+                id="default-search"
+                className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-0 focus:border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Search..."
+                required=""
+                onChange={(e) => setsearchinput(e.target.value)}
+              />
+            </div>
+          </form>
+        </div>
 
         <div className="overflow-x-auto overflow-y-auto max-h-[500px]">
-
           <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
             <thead>
               <tr>
@@ -124,6 +227,9 @@ const ManageSubscriptions = () => {
                 <th className="py-3 px-6 text-left text-gray-600">
                   Subscription End
                 </th>
+                <th className="py-3 px-6 text-left text-gray-600">
+                  Genrate QR
+                </th>
                 <th className="py-3 px-6 text-left text-gray-600 hidden md:table-cell">
                   Status
                 </th>
@@ -131,7 +237,7 @@ const ManageSubscriptions = () => {
               </tr>
             </thead>
             <tbody>
-              {subscriptions.map((subscription) => (
+              {filteredSubscriptions.map((subscription) => (
                 <tr key={subscription._id} className="border-t border-gray-200">
                   {editing === subscription._id ? (
                     <>
@@ -219,7 +325,7 @@ const ManageSubscriptions = () => {
                       <td className="py-3 px-6"></td>
                       <td className="py-3 px-6">
                         <button
-                          onClick={() => handleSave(subscription._id)}
+                          onClick={(e) => handleSave(e, subscription._id)}
                           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                         >
                           Save
@@ -249,7 +355,27 @@ const ManageSubscriptions = () => {
                           subscription.subscription_upto
                         ).toLocaleDateString()}
                       </td>
-                      <td className="py-3 px-6">{subscription.isActive}</td>
+                      <td className="py-3 px-6">
+                        {/* QR */}
+                        <div
+  className="w-auto p-2 text-gray-500 rounded-full hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center"
+  onClick={() =>genrateQR(subscription.restaurant)}
+>
+  <IoMdDownload size={24} />
+</div>
+                       
+                      </td>
+                      <td className="py-3 px-6">
+                        {subscription.isActive === "Active" ? (
+                          <span class="inline-flex items-center rounded-md bg-green-50 px-3 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                            {subscription.isActive}
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center rounded-md bg-red-50 px-3 py-1 text-sm font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                            {subscription.isActive}
+                          </span>
+                        )}
+                      </td>
                       <td className="py-3 px-6 flex">
                         <button
                           onClick={() => handleEditClick(subscription)}
