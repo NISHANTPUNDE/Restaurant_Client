@@ -34,7 +34,11 @@ const SuperAdmin = () => {
 
     if (plan === "1-month")
       subscription_upto.setMonth(subscription_upto.getMonth() + 1);
-    if (plan === "6-months")
+    if (plan === "2-month")
+      subscription_upto.setMonth(subscription_upto.getMonth() + 2);
+    if (plan === "3-month")
+      subscription_upto.setMonth(subscription_upto.getMonth() + 3);
+    if (plan === "6-month")
       subscription_upto.setMonth(subscription_upto.getMonth() + 6);
     if (plan === "1-year")
       subscription_upto.setFullYear(subscription_upto.getFullYear() + 1);
@@ -153,7 +157,8 @@ const SuperAdmin = () => {
               className="shadow  border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option value="1-month">1 Month</option>
-              <option value="6-months">6 Months</option>
+              <option value="3-month">3 Months</option>
+              <option value="6-month">6 Months</option>
               <option value="1-year">1 Year</option>
             </select>
           </div>

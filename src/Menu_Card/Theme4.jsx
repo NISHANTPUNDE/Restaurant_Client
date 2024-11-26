@@ -19,39 +19,53 @@ const MenuItem = ({ title, price }) => (
   </div>
 );
 
-const Theme4 = () => {
+const Theme4 = ({ menuData, dishesByType }) => {
   const { restaurant } = useParams();
   const [activeTab, setActiveTab] = useState("breakfast");
   const [menuItems, setMenuItems] = useState({});
 
   useEffect(() => {
-    const fetchRestaurant = async () => {
-      try {
-        const res = await axios.get(
-          `${API_BASE_URL}/api/getmenuitem/${restaurant}`
-        );
-        const data = res.data.data[0];
-        const fetchedMenuItems = {};
-
-        data.dishesByType.forEach((item) => {
-          fetchedMenuItems[item.dishType.toLowerCase()] = item.dishes.map(
-            (dish) => ({
-              name: dish.dishName,
-              price: `$${dish.price}`,
-              description: dish.description || "A delicious dish to enjoy!",
-              imgSrc: bg1,
-            })
+    if (!menuData) {
+      const fetchRestaurant = async () => {
+        try {
+          const res = await axios.get(
+            `${API_BASE_URL}/api/getmenuitem/${restaurant}`
           );
-        });
+          const data = res.data.data[0];
+          const fetchedMenuItems = {};
 
-        setMenuItems(fetchedMenuItems);
-        setActiveTab(Object.keys(fetchedMenuItems)[0] || "breakfast");
-      } catch (error) {
-        console.error("Error fetching menu:", error);
-      }
-    };
+          data.dishesByType.forEach((item) => {
+            fetchedMenuItems[item.dishType.toLowerCase()] = item.dishes.map(
+              (dish) => ({
+                name: dish.dishName,
+                price: `$${dish.price}`,
+                description: dish.description || "A delicious dish to enjoy!",
+                imgSrc: bg1,
+              })
+            );
+          });
 
-    fetchRestaurant();
+          setMenuItems(fetchedMenuItems);
+          setActiveTab(Object.keys(fetchedMenuItems)[0] || "breakfast");
+        } catch (error) {
+          console.error("Error fetching menu:", error);
+        }
+      };
+
+      fetchRestaurant();
+    } else {
+      const preparedMenuItems = {};
+      (dishesByType || []).forEach((item) => {
+        preparedMenuItems[item.dishType] = item.dishes.map((dish) => ({
+          name: dish.dishName,
+          price: `Rs. ${dish.price}`,
+          description: dish.description || "A delicious dish to enjoy!",
+          imgSrc: bg1,
+        }));
+      });
+      setMenuItems(preparedMenuItems);
+      setActiveTab(Object.keys(preparedMenuItems)[0] || "breakfast");
+    }
   }, [restaurant]);
 
   console.log("title")

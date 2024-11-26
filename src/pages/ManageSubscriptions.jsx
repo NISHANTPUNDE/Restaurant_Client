@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { API_BASE_URL } from "../config/config";
 
 const ManageSubscriptions = () => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -15,7 +16,7 @@ const ManageSubscriptions = () => {
   });
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/getallrestaurants")
+    fetch(`${API_BASE_URL}/api/getallrestaurants`)
       .then((response) => response.json())
       .then((data) =>
         setSubscriptions(
@@ -52,7 +53,7 @@ const ManageSubscriptions = () => {
   };
 
   const handleSave = (id) => {
-    fetch(`http://localhost:3000/api/updatesubscription/${id}`, {
+    fetch(`${API_BASE_URL}/api/updatesubscription/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +83,7 @@ const ManageSubscriptions = () => {
   };
 
   const handleDelete = (subscription) => {
-    fetch(`http://localhost:3000/api/deletesubscription/${subscription._id}`, {
+    fetch(`${API_BASE_URL}/api/delete-restaurant/${subscription._id}`, {
       method: "DELETE",
     })
       .then(() => {
@@ -99,7 +100,9 @@ const ManageSubscriptions = () => {
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Manage Subscriptions
         </h1>
-        <div className="overflow-x-auto h-[90vh]">
+
+        <div className="overflow-x-auto overflow-y-auto max-h-[500px]">
+
           <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
             <thead>
               <tr>
@@ -190,7 +193,8 @@ const ManageSubscriptions = () => {
                           className="block w-full p-2 border border-gray-300 rounded"
                         >
                           <option value="1-month">1 Month</option>
-                          <option value="6-months">6 Months</option>
+                          <option value="3-month">3 Months</option>
+                          <option value="6-month">6 Months</option>
                           <option value="1-year">1 Year</option>
                         </select>
                       </td>

@@ -4,7 +4,7 @@ const ViewRestaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/getallrestaurants")
+    fetch(`${API_BASE_URL}/api/getallrestaurants`)
       .then((response) => response.json())
       .then((data) => setRestaurants(data.data))
       .catch((error) => console.error("Error fetching restaurants:", error));

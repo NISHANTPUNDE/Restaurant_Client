@@ -742,15 +742,19 @@ const Admin = () => {
               <BlackTheme menuData={dataRestro} dishesByType={dishesByType} />
             ) : null} */}
               {ThemeComponent ? (
-                ThemeComponent === "http://localhost:3000/public/BlackTheme" ? (
+                ThemeComponent === `${API_BASE_URL}/public/BlackTheme` ? (
                   <BlackTheme
                     menuData={dataRestro}
                     dishesByType={dishesByType}
                   />
-                ) : ThemeComponent === "http://localhost:3000/public/Theme2" ? (
+                ) : ThemeComponent === `${API_BASE_URL}/public/Theme2` ? (
                   <Theme2 menuData={dataRestro} dishesByType={dishesByType} />
-                ) : ThemeComponent === "http://localhost:3000/public/Theme3" ? (
+                ) : ThemeComponent === `${API_BASE_URL}/public/Theme3` ? (
                   <Theme3 menuData={dataRestro} dishesByType={dishesByType} />
+
+                ) : ThemeComponent === `${API_BASE_URL}/public/Theme4` ? (
+                  <Theme4 menuData={dataRestro} dishesByType={dishesByType} />
+
                 ) : null
               ) : null}
             </div>
