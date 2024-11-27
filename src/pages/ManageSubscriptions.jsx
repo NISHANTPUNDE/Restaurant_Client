@@ -142,24 +142,23 @@ const ManageSubscriptions = () => {
 
   console.log("searchinput", searchinput);
 
-  const genrateQR =  async  (restoname) => {
+  const genrateQR = async (restoname) => {
     try {
       const encodedName = encodeURIComponent(restoname); // Encode restaurant name
-      const qrURL = `http://localhost:5173/${encodedName}`; // Generate QR URL
+      const qrURL = `https://restaurant.deveraa.com/${encodedName}`; // Generate QR URL
       const qrDataURL = await QRCode.toDataURL(qrURL); // Generate QR code as Data URL
-  
+
       // Create a download link for the QR code
       const link = document.createElement("a");
       link.href = qrDataURL;
       link.download = `${restoname}.png`; // Download name
       link.click();
-  
+
       console.log("QR Code Generated and Downloaded:", restoname);
     } catch (error) {
       console.error("Error generating QR code:", error);
     }
   };
-  
 
   return (
     <div className="min-h-screen bg-gray-100 py-20">
@@ -358,12 +357,11 @@ const ManageSubscriptions = () => {
                       <td className="py-3 px-6">
                         {/* QR */}
                         <div
-  className="w-auto p-2 text-gray-500 rounded-full hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center"
-  onClick={() =>genrateQR(subscription.restaurant)}
->
-  <IoMdDownload size={24} />
-</div>
-                       
+                          className="w-auto p-2 text-gray-500 rounded-full hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center"
+                          onClick={() => genrateQR(subscription.restaurant)}
+                        >
+                          <IoMdDownload size={24} />
+                        </div>
                       </td>
                       <td className="py-3 px-6">
                         {subscription.isActive === "Active" ? (
