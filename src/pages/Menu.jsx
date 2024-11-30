@@ -25,6 +25,11 @@ const Menu = () => {
         const matchedRestaurant = data.data.find(
           (item) => item.restaurant.toLowerCase() === restaurant.toLowerCase()
         );
+        console.log("filter data",matchedRestaurant)
+        if (matchedRestaurant === undefined || matchedRestaurant === null) {
+          console.log("not found");
+          setsubscriptionisactive(false);
+        }
 
         if (matchedRestaurant) {
           // setFilteredData(matchedRestaurant);

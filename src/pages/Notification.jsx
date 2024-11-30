@@ -54,6 +54,9 @@ const Notifications = () => {
                   Email
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-semibold">
+                  Mobile
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold">
                   Subscription End
                 </th>
               </tr>
@@ -71,6 +74,9 @@ const Notifications = () => {
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
                     {item.username}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    {item.phone}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
                   <span className="inline-flex items-center rounded-md bg-red-50 px-3 py-1 text-sm font-medium text-red-700 ring-1 ring-inset ring-red-600/10">

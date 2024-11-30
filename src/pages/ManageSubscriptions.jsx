@@ -18,14 +18,22 @@ const ManageSubscriptions = () => {
     subscription_plan: "", // Subscription plan
   });
   const [filteredSubscriptions, setFilteredSubscriptions] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   // useEffect(() => {
   //   console.log("searchinput",searchinput)
   // }, [searchinput]);
   // Update filteredSubscriptions when searchInput or subscriptions change
   useEffect(() => {
+    
     const filteredData = subscriptions.filter((item) =>
-      item.restaurant.toLowerCase().includes(searchinput.toLowerCase())
+      item.restaurant.toLowerCase().includes(searchinput.toLowerCase()) ||
+    item.username.toLowerCase().includes(searchinput.toLowerCase()) ||
+    item.agent.toLowerCase().includes(searchinput.toLowerCase()) ||
+    item.phone.toLowerCase().includes(searchinput.toLowerCase()) ||
+    item.subscription_plan.toLowerCase().includes(searchinput.toLowerCase())||
+    item.isActive.toLowerCase().includes(searchinput.toLowerCase())
+    
     );
     setFilteredSubscriptions(filteredData);
   }, [searchinput, subscriptions]);
@@ -49,6 +57,7 @@ const ManageSubscriptions = () => {
   // console.log("subscriptions", subscriptions);
 
   const handleEditClick = (subscription) => {
+    setIsModalOpen(true);
     setEditing(subscription._id);
     setFormData({
       restaurant: subscription.restaurant,
@@ -142,24 +151,28 @@ const ManageSubscriptions = () => {
 
   console.log("searchinput", searchinput);
 
-  const genrateQR =  async  (restoname) => {
+  const genrateQR = async (restoname) => {
     try {
       const encodedName = encodeURIComponent(restoname); // Encode restaurant name
       const qrURL = `http://localhost:5173/${encodedName}`; // Generate QR URL
       const qrDataURL = await QRCode.toDataURL(qrURL); // Generate QR code as Data URL
-  
+
       // Create a download link for the QR code
       const link = document.createElement("a");
       link.href = qrDataURL;
       link.download = `${restoname}.png`; // Download name
       link.click();
-  
+
       console.log("QR Code Generated and Downloaded:", restoname);
     } catch (error) {
       console.error("Error generating QR code:", error);
     }
   };
-  
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Hide the modal
+    setEditing(null);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-20">
@@ -241,96 +254,208 @@ const ManageSubscriptions = () => {
                 <tr key={subscription._id} className="border-t border-gray-200">
                   {editing === subscription._id ? (
                     <>
-                      <td className="py-3 px-6">
-                        <input
-                          type="text"
-                          name="restaurant"
-                          value={formData.restaurant}
-                          onChange={handleInputChange}
-                          placeholder="Restaurant Name"
-                          className="block w-full p-2 border border-gray-300 rounded"
-                        />
-                      </td>
-                      <td className="py-3 px-6">
-                        <input
-                          type="email"
-                          name="username"
-                          value={formData.username}
-                          onChange={handleInputChange}
-                          placeholder="Email"
-                          className="block w-full p-2 border border-gray-300 rounded"
-                        />
-                      </td>
-                      <td className="py-3 px-6 hidden md:table-cell">
-                        <input
-                          type="text"
-                          name="password"
-                          value={formData.password}
-                          onChange={handleInputChange}
-                          placeholder="Password"
-                          className="block w-full p-2 border border-gray-300 rounded"
-                        />
-                      </td>
-                      <td className="py-3 px-6">
-                        <input
-                          type="text"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          placeholder="Phone Number"
-                          className="block w-full p-2 border border-gray-300 rounded"
-                        />
-                      </td>
-                      <td className="py-3 px-6">
-                        <input
-                          type="text"
-                          name="agent"
-                          value={formData.agent}
-                          onChange={handleInputChange}
-                          placeholder="Agent Name"
-                          className="block w-full p-2 border border-gray-300 rounded"
-                        />
-                      </td>
-                      <td className="py-3 px-6">
-                        <select
-                          name="subscription_plan"
-                          value={formData.subscription_plan}
-                          onChange={handleInputChange}
-                          className="block w-full p-2 border border-gray-300 rounded"
+                      {/* Main modal */}
+                      {isModalOpen && (
+                        <div
+                          id="authentication-modal"
+                          tabIndex={-1}
+                          aria-hidden="true"
+                          className="flex justify-center items-center fixed inset-0 z-50 w-full h-screen bg-black bg-opacity-50"
                         >
-                          <option value="1-month">1 Month</option>
-                          <option value="3-month">3 Months</option>
-                          <option value="6-month">6 Months</option>
-                          <option value="1-year">1 Year</option>
-                        </select>
-                      </td>
-                      <td className="py-3 px-6">
-                        <input
-                          type="date"
-                          name="subscription_start"
-                          value={formData.subscription_start.split("T")[0]}
-                          onChange={handleInputChange}
-                          className="block w-full p-2 border border-gray-300 rounded"
-                        />
-                      </td>
-                      <td className="py-3 px-6">
-                        <input
-                          type="date"
-                          name="subscription_upto"
-                          value={formData.subscription_upto.split("T")[0]}
-                          onChange={handleInputChange}
-                          className="block w-full p-2 border border-gray-300 rounded"
-                        />
-                      </td>
-                      <td className="py-3 px-6"></td>
-                      <td className="py-3 px-6">
-                        <button
-                          onClick={(e) => handleSave(e, subscription._id)}
-                          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                        >
-                          Save
-                        </button>
-                      </td>
+                          <div className="relative p-4 w-full max-w-2xl">
+                            {/* Modal content */}
+                            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                              {/* Modal header */}
+                              <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                                  Update {formData.restaurant}
+                                </h3>
+                                <button
+                                  type="button"
+                                  className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                  data-modal-hide="authentication-modal"
+                                  //  onClick={()=>setIsModalOpen(false)}
+                                  onClick={() => closeModal()}
+                                >
+                                  <svg
+                                    className="w-3 h-3"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 14 14"
+                                  >
+                                    <path
+                                      stroke="currentColor"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                    />
+                                  </svg>
+                                  <span className="sr-only">Close modal</span>
+                                </button>
+                              </div>
+                              {/* Modal body */}
+                              <div className="p-4 md:p-5">
+                                <form className="space-y-4" action="#">
+                                  {/* Grid layout for fields */}
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                      <label
+                                        htmlFor="restaurant"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                      >
+                                        Restaurant Name
+                                      </label>
+                                      <input
+                                        type="text"
+                                        name="restaurant"
+                                        value={formData.restaurant}
+                                        onChange={handleInputChange}
+                                        placeholder="Restaurant Name"
+                                        className="block w-full p-2 border border-gray-300 rounded"
+                                      />
+                                    </div>
+                                    <div>
+                                      <label
+                                        htmlFor="username"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                      >
+                                        Email
+                                      </label>
+                                      <input
+                                        type="email"
+                                        name="username"
+                                        value={formData.username}
+                                        onChange={handleInputChange}
+                                        placeholder="Email"
+                                        className="block w-full p-2 border border-gray-300 rounded"
+                                      />
+                                    </div>
+                                    <div>
+                                      <label
+                                        htmlFor="password"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                      >
+                                        Password
+                                      </label>
+                                      <input
+                                        type="text"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleInputChange}
+                                        placeholder="Password"
+                                        className="block w-full p-2 border border-gray-300 rounded"
+                                      />
+                                    </div>
+                                    <div>
+                                      <label
+                                        htmlFor="phone"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                      >
+                                        Phone Number
+                                      </label>
+                                      <input
+                                        type="text"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleInputChange}
+                                        placeholder="Phone Number"
+                                        className="block w-full p-2 border border-gray-300 rounded"
+                                      />
+                                    </div>
+                                    <div>
+                                      <label
+                                        htmlFor="agent"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                      >
+                                        Agent
+                                      </label>
+                                      <input
+                                        type="text"
+                                        name="agent"
+                                        value={formData.agent}
+                                        onChange={handleInputChange}
+                                        placeholder="Agent Name"
+                                        className="block w-full p-2 border border-gray-300 rounded"
+                                      />
+                                    </div>
+                                    <div>
+                                      <label
+                                        htmlFor="subscription_plan"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                      >
+                                        Subscription Plan
+                                      </label>
+                                      <select
+                                        name="subscription_plan"
+                                        value={formData.subscription_plan}
+                                        onChange={handleInputChange}
+                                        className="block w-full p-2 border border-gray-300 rounded"
+                                      >
+                                        <option value="1-month">1 Month</option>
+                                        <option value="3-month">
+                                          3 Months
+                                        </option>
+                                        <option value="6-month">
+                                          6 Months
+                                        </option>
+                                        <option value="1-year">1 Year</option>
+                                      </select>
+                                    </div>
+                                    <div>
+                                      <label
+                                        htmlFor="subscription_start"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                      >
+                                        Subscription Start
+                                      </label>
+                                      <input
+                                        type="date"
+                                        name="subscription_start"
+                                        value={
+                                          formData.subscription_start.split(
+                                            "T"
+                                          )[0]
+                                        }
+                                        onChange={handleInputChange}
+                                        className="block w-full p-2 border border-gray-300 rounded"
+                                      />
+                                    </div>
+                                    <div>
+                                      <label
+                                        htmlFor="subscription_upto"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                      >
+                                        Subscription End
+                                      </label>
+                                      <input
+                                        type="date"
+                                        name="subscription_upto"
+                                        value={
+                                          formData.subscription_upto.split(
+                                            "T"
+                                          )[0]
+                                        }
+                                        onChange={handleInputChange}
+                                        className="block w-full p-2 border border-gray-300 rounded"
+                                      />
+                                    </div>
+                                  </div>
+                                  <button
+                                    onClick={(e) =>
+                                      handleSave(e, subscription._id)
+                                    }
+                                    className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                  >
+                                    Update
+                                  </button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </>
                   ) : (
                     <>
@@ -358,12 +483,11 @@ const ManageSubscriptions = () => {
                       <td className="py-3 px-6">
                         {/* QR */}
                         <div
-  className="w-auto p-2 text-gray-500 rounded-full hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center"
-  onClick={() =>genrateQR(subscription.restaurant)}
->
-  <IoMdDownload size={24} />
-</div>
-                       
+                          className="w-auto p-2 text-gray-500 rounded-full hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 cursor-pointer flex items-center justify-center"
+                          onClick={() => genrateQR(subscription.restaurant)}
+                        >
+                          <IoMdDownload size={24} />
+                        </div>
                       </td>
                       <td className="py-3 px-6">
                         {subscription.isActive === "Active" ? (
