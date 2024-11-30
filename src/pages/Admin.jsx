@@ -30,7 +30,7 @@ const Admin = () => {
   const [subscriptionisactive, setsubscriptionisactive] = useState(true);
   const [subsriptionenddate, setsubsriptionenddate] = useState("");
 
-  console.log("previouscustdata", previouscustdata);
+
 
   useEffect(() => {
     const fetchRestaurants = async () => {
@@ -92,7 +92,7 @@ const Admin = () => {
   }, [restaurant]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/getmenuitem/${restaurant}`)
+    fetch(`http://localhost:3012/api/getmenuitem/${restaurant}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -113,7 +113,9 @@ const Admin = () => {
         setDishesByType(data.data[0].dishesByType);
       })
       .catch((error) => console.error("Error fetching restaurants:", error));
-  }, []);
+  }, [restaurant]);
+
+  console.log("previouscustdata", previouscustdata);
 
   useEffect(() => {
     const fetchMenuImages = async () => {

@@ -7,6 +7,7 @@ import bgimg from "../assets/pizza.avif";
 import theme2 from "../assets/menu1.jpeg";
 import bg3 from "../assets/bgmenu.png";
 import menutitle from "../assets/menutitle.png";
+// import { set } from "mongoose";
 
 const Menu = () => {
   const { restaurant } = useParams(); // Access the parameter from the URL
@@ -14,18 +15,21 @@ const Menu = () => {
   const [activeTab, setActiveTab] = useState("breakfast");
   const [activetemplate, setactivetemplate] = useState("");
   const [subscriptionisactive, setsubscriptionisactive] = useState(true);
+  const [restoname, setrestoname] = useState('');
 
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/api/getallrestaurants`);
         const data = await response.json();
-
+        console.log("filter from", data.data)
+        console.log("username", restaurant)
         // Filter the data based on the restaurant name from the URL
         const matchedRestaurant = data.data.find(
-          (item) => item.restaurant.toLowerCase() === restaurant.toLowerCase()
+          (item) => item.username.toLowerCase() === restaurant.toLowerCase()
         );
-        console.log("filter data",matchedRestaurant)
+        console.log("filter data", matchedRestaurant.restaurant);
+        setrestoname(matchedRestaurant.restaurant)
         if (matchedRestaurant === undefined || matchedRestaurant === null) {
           console.log("not found");
           setsubscriptionisactive(false);
@@ -81,7 +85,7 @@ const Menu = () => {
     const fetchRestaurant = async () => {
       try {
         const res = await axios.get(
-          `${API_BASE_URL}/api/getmenuitem/${restaurant}`
+          `${API_BASE_URL}/api/getmenuitem/${restoname}`
         );
         console.log("response data", res.data);
         setrestodata(res.data.data[0]);
@@ -97,7 +101,7 @@ const Menu = () => {
       }
     };
     fetchRestaurant();
-  }, [restaurant]);
+  }, [restoname]);
 
   console.log("activetemplate", activetemplate);
 
@@ -291,11 +295,10 @@ const Menu = () => {
                   <button
                     key={index}
                     onClick={() => setActiveTab(type.dishType)}
-                    className={`text-white font-semibold py-2 px-6 mx-2 uppercase border border-gray-800 rounded-lg transition-colors ${
-                      activeTab === type.dishType
+                    className={`text-white font-semibold py-2 px-6 mx-2 uppercase border border-gray-800 rounded-lg transition-colors ${activeTab === type.dishType
                         ? "bg-red-600 text-white"
                         : "bg-transparent"
-                    } hover:bg-red-600 hover:text-white`}
+                      } hover:bg-red-600 hover:text-white`}
                   >
                     {type.dishType.charAt(0).toUpperCase() +
                       type.dishType.slice(1)}
@@ -361,11 +364,10 @@ const Menu = () => {
                   <button
                     key={index}
                     onClick={() => setActiveTab(type.dishType)}
-                    className={`px-6 py-2 mx-2 text-lg font-semibold rounded ${
-                      activeTab === type.dishType
+                    className={`px-6 py-2 mx-2 text-lg font-semibold rounded ${activeTab === type.dishType
                         ? "bg-red-600 text-white"
                         : "bg-transparent text-red-600 border border-red-600 hover:bg-red-600 hover:text-white"
-                    }`}
+                      }`}
                   >
                     {type.dishType.charAt(0).toUpperCase() +
                       type.dishType.slice(1)}
