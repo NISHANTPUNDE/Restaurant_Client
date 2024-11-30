@@ -154,7 +154,7 @@ const ManageSubscriptions = () => {
   const genrateQR = async (restoname) => {
     try {
       const encodedName = encodeURIComponent(restoname); // Encode restaurant name
-      const qrURL = `http://localhost:5173/${encodedName}`; // Generate QR URL
+      const qrURL = `https://restaurant.deveraa.com/${encodedName}`; // Generate QR URL
       const qrDataURL = await QRCode.toDataURL(qrURL); // Generate QR code as Data URL
 
       // Create a download link for the QR code
@@ -169,10 +169,12 @@ const ManageSubscriptions = () => {
     }
   };
 
+// close modal
   const closeModal = () => {
     setIsModalOpen(false); // Hide the modal
     setEditing(null);
   };
+
 
   return (
     <div className="min-h-screen bg-gray-100 py-20">
