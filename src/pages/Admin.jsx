@@ -30,8 +30,6 @@ const Admin = () => {
   const [subscriptionisactive, setsubscriptionisactive] = useState(true);
   const [subsriptionenddate, setsubsriptionenddate] = useState("");
 
-
-
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
@@ -42,7 +40,7 @@ const Admin = () => {
         const matchedRestaurant = data.data.find(
           (item) => item.restaurant.toLowerCase() === restaurant.toLowerCase()
         );
-        console.log("filter data",matchedRestaurant)
+        console.log("filter data", matchedRestaurant);
         if (matchedRestaurant === undefined || matchedRestaurant === null) {
           console.log("not found");
           setsubscriptionisactive(false);
@@ -68,20 +66,21 @@ const Admin = () => {
           if (subscriptionEndDate >= currentDate) {
             setsubscriptionisactive(true);
             console.log("Subscription Status: Active", subscriptionEndDate);
-          
-            const gapInDays = Math.ceil((subscriptionEndDate - currentDate) / (1000 * 60 * 60 * 24)); // Calculate gap in days
-          
+
+            const gapInDays = Math.ceil(
+              (subscriptionEndDate - currentDate) / (1000 * 60 * 60 * 24)
+            ); // Calculate gap in days
+
             if (gapInDays > 5) {
               console.log("Gap: More than five days");
             } else {
               console.log("Gap: Less than or equal to five days");
-              setShowAlert(true)
+              setShowAlert(true);
             }
           } else {
             setsubscriptionisactive(false);
             console.log("Subscription Status: Expired");
           }
-          
         }
       } catch (error) {
         console.error("Error fetching restaurants:", error);
@@ -92,7 +91,7 @@ const Admin = () => {
   }, [restaurant]);
 
   useEffect(() => {
-    fetch(`http://localhost:3012/api/getmenuitem/${restaurant}`)
+    fetch(`${API_BASE_URL}/api/getmenuitem/${restaurant}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
