@@ -17,6 +17,8 @@ const Theme2 = ({ menuData, dishesByType }) => {
           const res = await axios.get(
             `${API_BASE_URL}/api/getmenuitem/${restaurant}`
           );
+
+          
           const data = res.data.data[0];
           const fetchedMenuItems = {};
           data?.dishesByType.forEach((item) => {
@@ -27,6 +29,7 @@ const Theme2 = ({ menuData, dishesByType }) => {
             }));
           });
           setMenuItems(fetchedMenuItems);
+          console.log("data fetch from theme selected",fetchedMenuItems);
           setActiveMenu(Object.keys(fetchedMenuItems)[0] || "");
         } catch (error) {
           console.error("Error fetching menu:", error);
@@ -54,7 +57,7 @@ const Theme2 = ({ menuData, dishesByType }) => {
   console.log(menuItems);
   console.log("menuData", menuData);
 
-  console.log("title theme 2")
+  console.log("dishesByType",dishesByType);
 
   return (
     <div

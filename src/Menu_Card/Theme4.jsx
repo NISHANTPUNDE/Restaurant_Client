@@ -23,6 +23,7 @@ const Theme4 = ({ menuData, dishesByType }) => {
           const res = await axios.get(
             `${API_BASE_URL}/api/getmenuitem/${restaurant}`
           );
+          console.log("data fetch from theme selected",res.data);
           const data = res.data.data[0];
           const fetchedMenuItems = {};
 
