@@ -30,8 +30,6 @@ const Admin = () => {
   const [subscriptionisactive, setsubscriptionisactive] = useState(true);
   const [subsriptionenddate, setsubsriptionenddate] = useState("");
 
-
-
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
@@ -42,7 +40,7 @@ const Admin = () => {
         const matchedRestaurant = data.data.find(
           (item) => item.restaurant.toLowerCase() === restaurant.toLowerCase()
         );
-        console.log("filter data", matchedRestaurant)
+        console.log("filter data", matchedRestaurant);
         if (matchedRestaurant === undefined || matchedRestaurant === null) {
           console.log("not found");
           setsubscriptionisactive(false);
@@ -69,19 +67,20 @@ const Admin = () => {
             setsubscriptionisactive(true);
             console.log("Subscription Status: Active", subscriptionEndDate);
 
-            const gapInDays = Math.ceil((subscriptionEndDate - currentDate) / (1000 * 60 * 60 * 24)); // Calculate gap in days
+            const gapInDays = Math.ceil(
+              (subscriptionEndDate - currentDate) / (1000 * 60 * 60 * 24)
+            ); // Calculate gap in days
 
             if (gapInDays > 5) {
               console.log("Gap: More than five days");
             } else {
               console.log("Gap: Less than or equal to five days");
-              setShowAlert(true)
+              setShowAlert(true);
             }
           } else {
             setsubscriptionisactive(false);
             console.log("Subscription Status: Expired");
           }
-
         }
       } catch (error) {
         console.error("Error fetching restaurants:", error);
@@ -92,7 +91,7 @@ const Admin = () => {
   }, [restaurant]);
 
   useEffect(() => {
-    fetch(`https://api.restaurant.deveraa.com/api/getmenuitem/${restaurant}`)
+    fetch(`${API_BASE_URL}/api/getmenuitem/${restaurant}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -317,9 +316,8 @@ const Admin = () => {
     }
   };
 
-  console.log("dataRestro", dataRestro.dishmenuTemplete);
-  console.log("API_BASE_URL", API_BASE_URL);
-  console.log("ThemeComponent",ThemeComponent)
+  console.log("dataRestro", dataRestro);
+
   return (
     <>
       {subscriptionisactive === true ? (
@@ -363,8 +361,9 @@ const Admin = () => {
                 </svg>
               </button>
               <div
-                className={`${isOpen ? "block" : "hidden"
-                  } w-full md:block md:w-auto`}
+                className={`${
+                  isOpen ? "block" : "hidden"
+                } w-full md:block md:w-auto`}
                 id="navbar-default"
               >
                 <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
@@ -443,10 +442,11 @@ const Admin = () => {
             <form>
               <div
                 style={{ display: previouscustdata ? "none" : "block" }}
-                className={` mb-6 ${dataRestro.dishmenuTemplete
+                className={` mb-6 ${
+                  dataRestro.dishmenuTemplete
                     ? "hidden"
                     : "grid-cols-2 md:grid-cols-2"
-                  }`}
+                }`}
               >
                 <h2 className="text-2xl font-semibold font-merienda italic text-burlywood">
                   Select Menu Template
@@ -479,10 +479,11 @@ const Admin = () => {
               ))}
             </div> */}
                 <div
-                  className={`grid w-full gap-2 ${dataRestro.dishmenuTemplete
+                  className={`grid w-full gap-2 ${
+                    dataRestro.dishmenuTemplete
                       ? "grid-cols-2"
                       : "grid-cols-2 md:grid-cols-2"
-                    }`}
+                  }`}
                 >
                   {menuImages.map((image, index) => (
                     <div
@@ -493,15 +494,16 @@ const Admin = () => {
                           dishmenuTemplete: image,
                         })
                       }
-                      className={`relative flex flex-col mt-3 shadow-sm border rounded-lg w-full transition-transform duration-300 ${dataRestro.dishmenuTemplete === image
+                      className={`relative flex flex-col mt-3 shadow-sm border rounded-lg w-full transition-transform duration-300 ${
+                        dataRestro.dishmenuTemplete === image
                           ? "border-green-500 bg-green-100 scale-105 shadow-lg"
                           : "border-gray-300 hover:border-blue-500 hover:scale-105"
-                        }`}
+                      }`}
                       style={{
                         display:
                           dataRestro.dishmenuTemplete === image ||
-                            !dataRestro.dishmenuTemplete ||
-                            !previouscustdata
+                          !dataRestro.dishmenuTemplete ||
+                          !previouscustdata
                             ? "block"
                             : "none",
                       }}
