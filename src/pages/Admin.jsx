@@ -319,7 +319,7 @@ const Admin = () => {
 
   console.log("dataRestro", dataRestro);
   console.log("ThemeComponent",ThemeComponent);
-  
+
   return (
     <>
       {subscriptionisactive === true ? (
@@ -890,7 +890,7 @@ const Admin = () => {
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `${API_BASE_URL}/public/Theme4` ? (
+                    ) : ThemeComponent === ` http://localhost:3012/public/Theme4` ? (
                       <Theme4
                         menuData={dataRestro}
                         dishesByType={dishesByType}
