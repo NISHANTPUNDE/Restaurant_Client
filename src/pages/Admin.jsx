@@ -226,7 +226,7 @@ const Admin = () => {
     .replace(/\.[^/.]+$/, "");
   const ThemeComponent = trimmedFilename;
 
-  console.log("ThemeComponent",ThemeComponent)
+ 
   // update the menu card
   const updatemenucard = async (e) => {
     console.log("menu card updated");
@@ -318,7 +318,8 @@ const Admin = () => {
   };
 
   console.log("dataRestro", dataRestro);
-
+  console.log("ThemeComponent",ThemeComponent);
+  
   return (
     <>
       {subscriptionisactive === true ? (
