@@ -222,7 +222,7 @@ const Admin = () => {
   };
 
   const trimmedFilename = dataRestro.dishmenuTemplete
-    .replace(`http://api.restaurant.deveraa.com/public/`, "")
+    .replace(`https://api.restaurant.deveraa.com/public/`, "")
     .replace(/\.[^/.]+$/, "");
   const ThemeComponent = trimmedFilename;
 
