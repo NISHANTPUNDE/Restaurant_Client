@@ -875,17 +875,17 @@ const Admin = () => {
               <BlackTheme menuData={dataRestro} dishesByType={dishesByType} />
             ) : null} */}
                   {ThemeComponent ? (
-                    ThemeComponent === `${API_BASE_URL}/public/BlackTheme` ? (
+                    ThemeComponent === `http://localhost:3012/public/BlackTheme` ? (
                       <BlackTheme
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `${API_BASE_URL}/public/Theme2` ? (
+                    ) : ThemeComponent === `http://localhost:3012/public/Theme2` ? (
                       <Theme2
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `${API_BASE_URL}/public/Theme3` ? (
+                    ) : ThemeComponent === `http://localhost:3012/public/Theme3` ? (
                       <Theme3
                         menuData={dataRestro}
                         dishesByType={dishesByType}
@@ -895,7 +895,7 @@ const Admin = () => {
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `${API_BASE_URL}/public/Theme5` ? (
+                    ) : ThemeComponent === `http://localhost:3012/public/Theme5` ? (
                       <Theme5
                         menuData={dataRestro}
                         dishesByType={dishesByType}
