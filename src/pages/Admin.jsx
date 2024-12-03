@@ -890,7 +890,7 @@ const Admin = () => {
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === ` http://localhost:3012/public/Theme4` ? (
+                    ) : ThemeComponent === `http://localhost:3012/public/Theme4` ? (
                       <Theme4
                         menuData={dataRestro}
                         dishesByType={dishesByType}
