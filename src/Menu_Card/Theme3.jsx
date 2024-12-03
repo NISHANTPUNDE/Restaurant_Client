@@ -5,6 +5,7 @@ import bgimg from "../assets/pizza.avif";
 import { API_BASE_URL } from "../config/config";
 
 const Theme3 = ({ menuData, dishesByType }) => {
+  console.log("meanu card load ala")
   const { restaurant } = useParams();
   const [activeTab, setActiveTab] = useState("breakfast");
   const [menuItems, setMenuItems] = useState({});

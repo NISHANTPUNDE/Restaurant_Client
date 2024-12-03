@@ -12,6 +12,7 @@ const MenuItem = ({ title, price }) => (
 );
 
 const Theme4 = ({ menuData, dishesByType }) => {
+  console.log("meanu card load ala")
   const { restaurant } = useParams();
   const [activeTab, setActiveTab] = useState("breakfast");
   const [menuItems, setMenuItems] = useState({});

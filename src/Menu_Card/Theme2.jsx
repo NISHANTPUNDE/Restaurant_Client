@@ -5,6 +5,7 @@ import bgimg from "../assets/menu1.jpeg";
 import { API_BASE_URL } from "../config/config";
 
 const Theme2 = ({ menuData, dishesByType }) => {
+  console.log("meanu card load ala")
   const { restaurant } = useParams();
   const [menuItems, setMenuItems] = useState({});
   const [activeMenu, setActiveMenu] = useState("");

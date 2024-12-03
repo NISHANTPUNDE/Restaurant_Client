@@ -5,6 +5,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../config/config";
 
 const BlackTheme = ({ menuData, dishesByType }) => {
+  console.log("meanu card load ala")
   const { restaurant } = useParams();
   const [menu, setMenu] = useState([]);
   console.log(menuData);

@@ -9,6 +9,7 @@ import menutitle from "../assets/menutitle.png";
 const MenuItem = ({ title, price }) => <div className="menu"></div>;
 
 const Theme4 = ({ menuData, dishesByType }) => {
+  console.log("meanu card load ala")
   const { restaurant } = useParams();
   const [activeTab, setActiveTab] = useState("breakfast");
   const [menuItems, setMenuItems] = useState({});
