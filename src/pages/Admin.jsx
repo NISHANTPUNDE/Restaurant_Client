@@ -890,12 +890,12 @@ const Admin = () => {
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `http://localhost:3012/public/Theme4` ? (
+                    ) : ThemeComponent === `http://api.restaurant.deveraa.com/public/Theme4` ? (
                       <Theme4
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `http://localhost:3012/public/Theme5` ? (
+                    ) : ThemeComponent === `http://api.restaurant.deveraa.com/public/Theme5` ? (
                       <Theme5
                         menuData={dataRestro}
                         dishesByType={dishesByType}
