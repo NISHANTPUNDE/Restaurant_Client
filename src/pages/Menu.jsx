@@ -241,7 +241,7 @@ const Menu = () => {
                   {restodata.dishesByType?.map((type) => (
                     <div key={type.dishType} className="">
                       <h3 className="text-xl font-bold text-[#eff0f2] border-b-2 mt-2 bg-[#633c28] p-2 w-[fit-content] rounded-lg">
-                        {type.dishType} Dishes
+                        {type.dishType}
                       </h3>
                       <div className="space-y-4">
                         {type.dishes.map((dish) => (
