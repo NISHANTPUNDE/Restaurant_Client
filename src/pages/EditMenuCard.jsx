@@ -158,7 +158,7 @@ const Admin = () => {
             <img
               src="https://blog.deveraa.com/_next/static/media/deveraa.52ebdceb.jpg"
               className="h-8"
-              alt="Flowbite Logo"
+              alt="Deveraa Logo"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               {/* DevEraa Resto */}
