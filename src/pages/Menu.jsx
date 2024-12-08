@@ -208,6 +208,8 @@ const Menu = () => {
               height: "120vh",
               display: activetemplate === "Theme5.png" ? "flex" : "none",
               flexDirection: "column",
+              position: "fixed",
+              overflowY :" auto"
             }}
           >
             <div
@@ -231,7 +233,6 @@ const Menu = () => {
             <div
               className="menu-list-container"
               style={{
-                overflowY: "auto",
                 flexGrow: 1, // Allows this section to take remaining height
               }}
             >
@@ -441,7 +442,6 @@ const Menu = () => {
             <div
               className="menu-list-container"
               style={{
-                overflowY: "auto",
                 flexGrow: 1,
               }}
             >
