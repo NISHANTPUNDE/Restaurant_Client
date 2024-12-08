@@ -875,27 +875,27 @@ const Admin = () => {
               <BlackTheme menuData={dataRestro} dishesByType={dishesByType} />
             ) : null} */}
                   {ThemeComponent ? (
-                    ThemeComponent === `https://api.restaurant.deveraa.com/public/BlackTheme` ? (
+                    ThemeComponent === `http://api.restaurant.deveraa.com/public/BlackTheme` ? (
                       <BlackTheme
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `https://api.restaurant.deveraa.com/public/Theme2` ? (
+                    ) : ThemeComponent === `http://api.restaurant.deveraa.com/public/Theme2` ? (
                       <Theme2
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `https://api.restaurant.deveraa.com/public/Theme3` ? (
+                    ) : ThemeComponent === `http://api.restaurant.deveraa.com/public/Theme3` ? (
                       <Theme3
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `https://api.restaurant.deveraa.com/public/Theme4` ? (
+                    ) : ThemeComponent === `http://api.restaurant.deveraa.com/public/Theme4` ? (
                       <Theme4
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `https://api.restaurant.deveraa.com/public/Theme5` ? (
+                    ) : ThemeComponent === `http://api.restaurant.deveraa.com/public/Theme5` ? (
                       <Theme5
                         menuData={dataRestro}
                         dishesByType={dishesByType}
