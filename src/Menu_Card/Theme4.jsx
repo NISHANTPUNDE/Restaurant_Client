@@ -70,7 +70,6 @@ const Theme4 = ({ menuData, dishesByType }) => {
     className="module"
     style={{
       backgroundImage: `url(${bg1})`,
-      height: "150vh",
       display: "flex",
       flexDirection: "column",
     }}
@@ -100,12 +99,11 @@ const Theme4 = ({ menuData, dishesByType }) => {
     <div
       className="menu-list-container"
       style={{
-        overflowY: "auto",
         flexGrow: 1, // Allows this section to take remaining height
       }}
     >
       <div className="row">
-        <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg ">
+        <div className="max-w-4xl mx-auto p-6 ">
           {dishesByType.map((type) => (
             <div key={type._id} className="mb-8">
               <h3 className="text-xl font-bold text-gray-800 border-b-2 border-orange-500 pb-2 mb-4">

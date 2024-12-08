@@ -332,7 +332,7 @@ const Admin = () => {
                 <img
                   src="https://blog.deveraa.com/_next/static/media/deveraa.52ebdceb.jpg"
                   className="h-8"
-                  alt="Flowbite Logo"
+                  alt="DevEraa Logo"
                 />
                 <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                   {/* DevEraa Resto */}
@@ -579,7 +579,7 @@ const Admin = () => {
                             htmlFor="floating_standard"
                             className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-burlywood peer-focus:dark:text-burlywood peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
                           >
-                            Hotel Name
+                            Resto Name
                           </label>
                         </div>
                       </div>
@@ -875,27 +875,27 @@ const Admin = () => {
               <BlackTheme menuData={dataRestro} dishesByType={dishesByType} />
             ) : null} */}
                   {ThemeComponent ? (
-                    ThemeComponent === `http://api.restaurant.deveraa.com/public/BlackTheme` ? (
+                    ThemeComponent === `https://api.restaurant.deveraa.com/public/BlackTheme` ? (
                       <BlackTheme
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `http://api.restaurant.deveraa.com/public/Theme2` ? (
+                    ) : ThemeComponent === `https://api.restaurant.deveraa.com/public/Theme2` ? (
                       <Theme2
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `http://api.restaurant.deveraa.com/public/Theme3` ? (
+                    ) : ThemeComponent === `https://api.restaurant.deveraa.com/public/Theme3` ? (
                       <Theme3
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `http://api.restaurant.deveraa.com/public/Theme4` ? (
+                    ) : ThemeComponent === `https://api.restaurant.deveraa.com/public/Theme4` ? (
                       <Theme4
                         menuData={dataRestro}
                         dishesByType={dishesByType}
                       />
-                    ) : ThemeComponent === `http://api.restaurant.deveraa.com/public/Theme5` ? (
+                    ) : ThemeComponent === `https://api.restaurant.deveraa.com/public/Theme5` ? (
                       <Theme5
                         menuData={dataRestro}
                         dishesByType={dishesByType}
@@ -933,7 +933,7 @@ const Admin = () => {
                 contact your service provider.
               </p>
               <a
-                href="#"
+                href="https://contact.deveraa.com/"
                 className="block w-full text-center text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 transition-colors dark:bg-blue-500 dark:hover:bg-blue-600"
               >
                 Contact Service Provider

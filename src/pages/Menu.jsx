@@ -290,7 +290,7 @@ const Menu = () => {
                 </h3>
               </div>
 
-              <div className="flex justify-center flex-wrap mb-8">
+              <div className="flex overflow-x-auto mb-8">
                 {restodata.dishesByType?.map((type, index) => (
                   <button
                     key={index}
@@ -359,7 +359,7 @@ const Menu = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center mb-8">
+              <div className="flex mb-8 overflow-x-auto">
                 {restodata.dishesByType?.map((type, index) => (
                   <button
                     key={index}

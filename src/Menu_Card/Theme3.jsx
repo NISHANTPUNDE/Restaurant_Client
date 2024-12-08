@@ -79,7 +79,7 @@ const Theme3 = ({ menuData, dishesByType }) => {
           </div>
         </div>
 
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-8 overflow-x-auto">
           {Object.keys(menuItems).map((tab) => (
             <button
               key={tab}
@@ -87,7 +87,7 @@ const Theme3 = ({ menuData, dishesByType }) => {
                 e.preventDefault(); // Prevents page refresh
                 setActiveTab(tab);
               }}
-              className={`px-6 py-2 mx-2 text-lg font-semibold rounded ${
+              className={`px-6 py-2 mx-2 text-lg font-semibold rounded text-gray-100 ${
                 tab ? "bg-red-600" : ""
               }`}
               style={{
@@ -125,14 +125,14 @@ const Theme3 = ({ menuData, dishesByType }) => {
             </div>
           ))}
         </div>
-        <div className="text-center mt-8">
+        {/* <div className="text-center mt-8">
           <a
             href="#"
             className="btn bg-red-600 text-white py-2 px-4 rounded-lg"
           >
             View More
           </a>
-        </div>
+        </div> */}
       </div>
     </section>
   );
